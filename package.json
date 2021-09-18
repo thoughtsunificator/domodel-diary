@@ -1,0 +1,31 @@
+{
+	"name": "domodel-diary",
+	"type": "module",
+	"description": "Small diary extension made for domodel",
+	"scripts": {
+		"test": "nodeunit-esm -r",
+		"generate-docs": "jsdoc --configure .jsdoc.json --verbose",
+		"lint": "eslint src/**/*.js"
+	},
+	"devDependencies": {
+		"eslint": "^7.28.0",
+		"jsdom": "^17.0.0",
+		"nodeunit-esm": "file:../nodeunit-esm"
+	},
+	"dependencies": {
+		"@domodel/paginator": "^1.0.2",
+		"@domodel/popup": "^1.0.2",
+		"@domodel/router": "^1.0.3",
+		"crypto-es": "^1.2.7",
+		"domodel": "^1.0.9"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/thoughtsunificator/domodel-diary.git"
+	},
+	"bugs": {
+		"url": "https://github.com/thoughtsunificator/domodel-diary/issues"
+	},
+	"author": "Romain Lebesle <oss@thoughtsunificator.me> (https://thoughtsunificator.me)",
+	"license": "MIT"
+}
