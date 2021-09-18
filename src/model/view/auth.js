@@ -37,7 +37,7 @@ export default data => ({
 					style: "text-decoration: underline; color: #731f1f; cursor: pointer",
 					type: "button",
 					identifier: "reset",
-					textContent: "Reset everything"
+					textContent: "Clear all your data"
 				}
 			]
 		},
