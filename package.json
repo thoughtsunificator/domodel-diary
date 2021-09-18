@@ -13,7 +13,7 @@
 		"eslint": "^7.28.0",
 		"jsdoc": "^3.6.7",
 		"jsdom": "^17.0.0",
-		"nodeunit-esm": "file:../nodeunit-esm"
+		"nodeunit-esm": "^1.0.3"
 	},
 	"dependencies": {
 		"@domodel/paginator": "^1.0.2",
