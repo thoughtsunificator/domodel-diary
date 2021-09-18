@@ -1,4 +1,4 @@
-# domodel-diary [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/thoughtsunificator/domodel-diary)
+# domodel-diary [![Build Status](https://travis-ci.com/thoughtsunificator/domodel-diary.svg?branch=master)](https://travis-ci.com/thoughtsunificator/domodel-diary)
 
 Small diary extension made for [domodel](https://github.com/thoughtsunificator/domodel)
 
