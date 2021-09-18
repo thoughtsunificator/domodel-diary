@@ -1,15 +1,20 @@
+import assert from "assert"
 import { Observable } from "domodel"
 
 import Day from "../src/object/day.js"
 
-export function instance(test) {
-	test.expect(3)
-	const date = new Date()
-	const day = new Day(date)
-	test.ok(day instanceof Observable)
-	test.strictEqual(day.date, date)
-	test.throws(function() {
-		day.date = new Date()
+describe("day", () => {
+
+	it("instance", () => {
+
+		const date = new Date()
+		const day = new Day(date)
+		assert.ok(day instanceof Observable)
+		assert.strictEqual(day.date, date)
+		assert.throws(function() {
+			day.date = new Date()
+		})
+
 	})
-	test.done()
-}
+
+})

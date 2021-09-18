@@ -1,3 +1,4 @@
+import assert from "assert"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 
@@ -16,56 +17,63 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-export function setUp(callback) {
-	rootBinding = new Binding()
-	Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	callback()
-}
+describe("view/diary/day", () => {
 
-export function tearDown(callback) {
-	rootBinding.remove()
-	callback()
-}
+	beforeEach(() => {
 
-export function instance(test) {
-	test.expect(1)
-	test.ok(new DayBinding() instanceof Binding)
-	test.done()
-}
+		rootBinding = new Binding()
+		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
 
-export function onCreated(test) {
-	const diary = new Diary()
-	const day = new Day(new Date())
-	const binding = new DayBinding({ diary, day })
-	rootBinding.run(DayModel(day), { binding })
-	test.done()
-}
-
-export function select(test) {
-	test.done()
-}
-
-export function unselect(test) {
-	test.done()
-}
-
-export function notesAdded(test) {
-	test.done()
-}
-
-export function notesRemoved(test) {
-	test.done()
-}
-
-export function click(test) {
-	test.expect(1)
-	const diary = new Diary()
-	const day = new Day(new Date())
-	const binding = new DayBinding({ diary, day })
-	rootBinding.run(DayModel(day), { binding })
-	diary.calendar.listen("set date", data => {
-		test.deepEqual(data.date, day.date)
-		test.done()
 	})
-	binding.root.dispatchEvent(new window.Event('click'))
-}
+
+	afterEach(() => {
+		rootBinding.remove()
+
+	})
+
+	it("instance", () => {
+
+			assert.ok(new DayBinding() instanceof Binding)
+
+	})
+
+	it("onCreated", () => {
+
+		const diary = new Diary()
+		const day = new Day(new Date())
+		const binding = new DayBinding({ diary, day })
+		rootBinding.run(DayModel(day), { binding })
+
+	})
+
+	it("select", () => {
+
+	})
+
+	it("unselect", () => {
+
+	})
+
+	it("notesAdded", () => {
+
+	})
+
+	it("notesRemoved", () => {
+
+	})
+
+	it("click", () => {
+
+		const diary = new Diary()
+		const day = new Day(new Date())
+		const binding = new DayBinding({ diary, day })
+		rootBinding.run(DayModel(day), { binding })
+		diary.calendar.listen("set date", data => {
+			assert.deepEqual(data.date, day.date)
+
+		})
+		binding.root.dispatchEvent(new window.Event('click'))
+
+	})
+
+})

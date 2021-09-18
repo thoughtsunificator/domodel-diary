@@ -19,7 +19,7 @@ export default class DiaryBinding extends Binding {
 	static INACTIVITY_TIMER_DELAY = (60 * 1000) * 15
 
 	startInactivityTimer() {
-		this.interval = setInterval(() => this.properties.diary.emit("logout") , DiaryBinding.INACTIVITY_TIMER_DELAY)
+		this.interval = this.root.ownerDocument.defaultView.setInterval(() => this.properties.diary.emit("logout"), DiaryBinding.INACTIVITY_TIMER_DELAY)
 	}
 
 	stopInactivityTimer() {

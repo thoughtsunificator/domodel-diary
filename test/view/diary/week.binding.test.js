@@ -1,3 +1,4 @@
+import assert from "assert"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 
@@ -14,30 +15,37 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-export function setUp(callback) {
-	rootBinding = new Binding()
-	Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	callback()
-}
+describe("view/diary/week", () => {
 
-export function tearDown(callback) {
-	rootBinding.remove()
-	callback()
-}
+	beforeEach(() => {
 
-export function instance(test) {
-	test.expect(1)
-	test.ok(new WeekBinding() instanceof Binding)
-	test.done()
-}
+		rootBinding = new Binding()
+		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
 
-export function onCreated(test) {
-	// const diary = new Diary()
-	// const binding = new WeekBinding({ diary })
-	// rootBinding.run(WeekModel, { binding })
-	test.done()
-}
+	})
 
-export function remove(test) {
-	test.done()
-}
+	afterEach(() => {
+
+		rootBinding.remove()
+
+	})
+
+	it("instance", () => {
+
+			assert.ok(new WeekBinding() instanceof Binding)
+
+	})
+
+	it("onCreated", () => {
+
+		// const diary = new Diary()
+		// const binding = new WeekBinding({ diary })
+		// rootBinding.run(WeekModel, { binding })
+
+	})
+
+	it("remove", () => {
+
+	})
+
+})

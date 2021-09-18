@@ -1,3 +1,4 @@
+import assert from "assert"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 
@@ -14,58 +15,64 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-export function setUp(callback) {
-	rootBinding = new Binding()
-	Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	callback()
-}
+describe("view/diary/notes", () => {
 
-export function tearDown(callback) {
-	rootBinding.remove()
-	callback()
-}
+	beforeEach(() => {
 
-export function instance(test) {
-	test.expect(1)
-	test.ok(new NotesBinding() instanceof Binding)
-	test.done()
-}
+		rootBinding = new Binding()
+		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
 
-export function onCreated(test) {
-	// const diary = new Diary()
-	// const binding = new NotesBinding({ diary })
-	// rootBinding.run(NotesModel, { binding })
-	test.done()
-}
+	})
 
-export function render(test) {
-	test.done()
-}
+	afterEach(() => {
 
-export function itemsChanged(test) {
-	test.done()
-}
+		rootBinding.remove()
 
-export function notesAdd(test) {
-	test.done()
-}
+	})
 
-export function notesUpdate(test) {
-	test.done()
-}
+	it("instance", () => {
 
-export function notesRemove(test) {
-	test.done()
-}
+			assert.ok(new NotesBinding() instanceof Binding)
 
-export function dateUpdated(test) {
-	test.done()
-}
+	})
 
-export function notesAdded(test) {
-	test.done()
-}
+	it("onCreated", () => {
+		// const diary = new Diary()
+		// const binding = new NotesBinding({ diary })
+		// rootBinding.run(NotesModel, { binding })
 
-export function notesRemoved(test) {
-	test.done()
-}
+	})
+
+	it("render", () => {
+
+	})
+
+	it("itemsChanged", () => {
+
+	})
+
+	it("notesAdd", () => {
+
+	})
+
+	it("notesUpdate", () => {
+
+	})
+
+	it("notesRemove", () => {
+
+	})
+
+	it("dateUpdated", () => {
+
+	})
+
+	it("notesAdded", () => {
+
+	})
+
+	it("notesRemoved", () => {
+
+	})
+
+})

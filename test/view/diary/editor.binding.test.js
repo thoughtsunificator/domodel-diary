@@ -1,3 +1,4 @@
+import assert from "assert"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 
@@ -14,74 +15,87 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-export function setUp(callback) {
-	rootBinding = new Binding()
-	Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	callback()
-}
+describe("view/diary/editor", () => {
 
-export function tearDown(callback) {
-	rootBinding.remove()
-	callback()
-}
+	beforeEach(() => {
 
-export function instance(test) {
-	test.expect(1)
-	test.ok(new EditorBinding() instanceof Binding)
-	test.done()
-}
+		rootBinding = new Binding()
+		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
 
-export function onCreated(test) {
-	const diary = new Diary()
-	const binding = new EditorBinding({ diary })
-	rootBinding.run(EditorModel, { binding })
-	test.done()
-}
-
-export function editorOpen(test) {
-	const diary = new Diary()
-	const binding = new EditorBinding({ diary })
-	rootBinding.run(EditorModel, { binding })
-	test.done()
-}
-
-export function editorClose(test) {
-	const diary = new Diary()
-	const binding = new EditorBinding({ diary })
-	rootBinding.run(EditorModel, { binding })
-	test.done()
-}
-
-export function closeButon(test) {
-	const diary = new Diary()
-	const binding = new EditorBinding({ diary })
-	rootBinding.run(EditorModel, { binding })
-	diary.listen("editor close", data => {
-		test.done()
 	})
-	binding.identifier.close.dispatchEvent(new window.Event('click'))
-	test.strictEqual(binding.identifier.content.value, "")
-}
 
-export function saveButton(test) {
-	const diary = new Diary()
-	const binding = new EditorBinding({ diary })
-	rootBinding.run(EditorModel, { binding })
-	diary.listen("editor close", data => {
-		test.done()
+	afterEach(() => {
+
+		rootBinding.remove()
+
 	})
-	binding.identifier.save.dispatchEvent(new window.Event('click'))
-}
 
-export function windowKeyup(test) {
-	const diary = new Diary()
-	const binding = new EditorBinding({ diary })
-	binding.opened = true
-	rootBinding.run(EditorModel, { binding })
-	diary.listen("editor close", data => {
-		test.done()
+	it("instance", () => {
+
+			assert.ok(new EditorBinding() instanceof Binding)
+
 	})
-	document.body.dispatchEvent(new window.Event('keyup', { keyCode: 27, bubbles: true }))
-	test.done()
-}
 
+	it("onCreated", () => {
+
+		const diary = new Diary()
+		const binding = new EditorBinding({ diary })
+		rootBinding.run(EditorModel, { binding })
+
+	})
+
+	it("editorOpen", () => {
+
+		const diary = new Diary()
+		const binding = new EditorBinding({ diary })
+		rootBinding.run(EditorModel, { binding })
+
+	})
+
+	it("editorClose", () => {
+
+		const diary = new Diary()
+		const binding = new EditorBinding({ diary })
+		rootBinding.run(EditorModel, { binding })
+
+	})
+
+	it("closeButon", () => {
+
+		const diary = new Diary()
+		const binding = new EditorBinding({ diary })
+		rootBinding.run(EditorModel, { binding })
+		diary.listen("editor close", data => {
+
+		})
+		binding.identifier.close.dispatchEvent(new window.Event('click'))
+		assert.strictEqual(binding.identifier.content.value, "")
+
+	})
+
+	it("saveButton", () => {
+
+		const diary = new Diary()
+		const binding = new EditorBinding({ diary })
+		rootBinding.run(EditorModel, { binding })
+		diary.listen("editor close", data => {
+
+		})
+		binding.identifier.save.dispatchEvent(new window.Event('click'))
+
+	})
+
+	it("windowKeyup", () => {
+
+		const diary = new Diary()
+		const binding = new EditorBinding({ diary })
+		binding.opened = true
+		rootBinding.run(EditorModel, { binding })
+		diary.listen("editor close", data => {
+
+		})
+		document.body.dispatchEvent(new window.Event('keyup', { keyCode: 27, bubbles: true }))
+
+	})
+
+})

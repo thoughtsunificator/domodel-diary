@@ -1,3 +1,4 @@
+import assert from "assert"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 
@@ -14,59 +15,65 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-export function setUp(callback) {
-	rootBinding = new Binding()
-	Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	callback()
-}
+describe("view/diary/calendar", () => {
 
-export function tearDown(callback) {
-	rootBinding.remove()
-	callback()
-}
+	beforeEach(() => {
 
-export function instance(test) {
-	test.expect(1)
-	test.ok(new CalendarBinding() instanceof Binding)
-	test.done()
-}
+		rootBinding = new Binding()
+		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
 
-export function onCreated(test) {
-	test.done()
-}
+	})
 
-export function setDate(test) {
-	test.done()
-}
+	afterEach(() => {
 
-export function setMonth(test) {
-	test.done()
-}
+		rootBinding.remove()
 
-export function setYear(test) {
-	test.done()
-}
+	})
 
-export function imported(test) {
-	test.done()
-}
+	it("instance", () => {
 
-export function todayButton(test) {
-	test.done()
-}
+			assert.ok(new CalendarBinding() instanceof Binding)
 
-export function monthButton(test) {
-	test.done()
-}
+	})
 
-export function previousMonthButton(test) {
-	test.done()
-}
+	it("onCreated", () => {
 
-export function nextMonthButton(test) {
-	test.done()
-}
+	})
 
-export function yearButton(test) {
-	test.done()
-}
+	it("setDate", () => {
+
+	})
+
+	it("setMonth", () => {
+
+	})
+
+	it("setYear", () => {
+
+	})
+
+	it("imported", () => {
+
+	})
+
+	it("todayButton", () => {
+
+	})
+
+	it("monthButton", () => {
+
+	})
+
+	it("previousMonthButton", () => {
+
+	})
+
+	it("nextMonthButton", () => {
+
+	})
+
+	it("yearButton", () => {
+
+	})
+
+})

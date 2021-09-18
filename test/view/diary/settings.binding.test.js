@@ -1,3 +1,4 @@
+import assert from "assert"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 import { PopupBinding } from "@domodel/popup"
@@ -15,43 +16,48 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-export function setUp(callback) {
-	rootBinding = new Binding()
-	Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	callback()
-}
+describe("view/diary/settings", () => {
 
-export function tearDown(callback) {
-	rootBinding.remove()
-	callback()
-}
+	beforeEach(() => {
 
-export function instance(test) {
-	test.expect(1)
-	test.ok(new SettingsBinding() instanceof PopupBinding)
-	test.done()
-}
+		rootBinding = new Binding()
+		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
 
-export function onCreated(test) {
-	// const diary = new Diary()
-	// const binding = new SettingsBinding({ diary })
-	// rootBinding.run(SettingsModel, { binding })
-	test.done()
-}
+	})
 
-export function settingsPopup(test) {
-	test.done()
-}
+	afterEach(() => {
 
-export function exportButton(test) {
-	test.done()
-}
+		rootBinding.remove()
 
-export function importButton(test) {
-	test.done()
-}
+	})
 
-export function logoutButton(test) {
-	test.done()
-}
+	it("instance", () => {
 
+			assert.ok(new SettingsBinding() instanceof PopupBinding)
+
+	})
+
+	it("onCreated", () => {
+		// const diary = new Diary()
+		// const binding = new SettingsBinding({ diary })
+		// rootBinding.run(SettingsModel, { binding })
+
+	})
+
+	it("settingsPopup", () => {
+
+	})
+
+	it("exportButton", () => {
+
+	})
+
+	it("importButton", () => {
+
+	})
+
+	it("logoutButton", () => {
+
+	})
+
+})
