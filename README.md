@@ -18,13 +18,11 @@ Small diary extension made for [domodel](https://github.com/thoughtsunificator/d
 import "assets/main.css"
 
 import { Core } from "domodel"
-import { DiaryModel, DiaryBinding, Diary, Persistence } from "domodel-diary"
+import { DiaryModel, DiaryBinding, Diary } from "domodel-diary"
 
 window.addEventListener("load", function() {
 
 	const diary = new Diary()
-
-	Persistence({ diary })
 
 	Core.run(DiaryModel, {
 		binding: new DiaryBinding({ diary }),
