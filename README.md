@@ -1,6 +1,6 @@
 # domodel-diary [![Build Status](https://travis-ci.com/thoughtsunificator/domodel-diary.svg?branch=master)](https://travis-ci.com/thoughtsunificator/domodel-diary)
 
-Universal Diary application
+Universal password protected diary application
 
 - Calendar
 - Daily notes encrypted using AES
