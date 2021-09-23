@@ -1,6 +1,6 @@
 # domodel-diary [![Build Status](https://travis-ci.com/thoughtsunificator/domodel-diary.svg?branch=master)](https://travis-ci.com/thoughtsunificator/domodel-diary)
 
-Small diary extension made for [domodel](https://github.com/thoughtsunificator/domodel)
+Universal Diary application
 
 - Calendar
 - Daily notes encrypted using AES

@@ -2,7 +2,7 @@
 	"name": "domodel-diary",
 	"type": "module",
 	"main": "index.js",
-	"description": "Small diary extension made for domodel",
+	"description": "Universal Diary application ",
 	"scripts": {
 		"test": "mocha test/**",
 		"generate-docs": "jsdoc --configure .jsdoc.json --verbose",
