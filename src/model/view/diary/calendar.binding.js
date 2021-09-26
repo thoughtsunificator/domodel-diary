@@ -87,7 +87,7 @@ export default class extends Binding {
 		this.identifier.nextMonth.addEventListener("click", () => calendar.emit("set month", this.identifier.month.selectedIndex + 1))
 		this.identifier.year.addEventListener("input", event => calendar.emit("set year", event.target.value))
 
-		calendar.emit("set date", { date: calendar.date })
+		calendar.emit("set date", { date: calendar.date, rebuild: true })
 
 	}
 
