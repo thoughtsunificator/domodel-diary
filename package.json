@@ -20,7 +20,7 @@
 		"@domodel/popup": "^1.0.2",
 		"@domodel/router": "^1.0.4",
 		"crypto-es": "^1.2.7",
-		"domodel": "^1.0.9"
+		"domodel": "^1.0.31"
 	},
 	"repository": {
 		"type": "git",

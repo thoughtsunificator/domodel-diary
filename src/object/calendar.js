@@ -1,9 +1,7 @@
-/** @module calendar */
-
 import { Observable } from "domodel"
 
 /**
- * @memberof module:calendar
+ * @global
  */
 class Calendar extends Observable {
 

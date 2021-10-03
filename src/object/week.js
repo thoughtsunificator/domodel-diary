@@ -1,9 +1,7 @@
-/** @module week */
-
 import { Observable } from "domodel"
 
 /**
- * @memberof module:week
+ * @global
  */
 class Week extends Observable {
 

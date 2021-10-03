@@ -1,12 +1,10 @@
-/** @module diary */
-
 import { Observable } from "domodel"
 
 import Calendar from "./calendar.js"
 import Note from "./note.js"
 
 /**
- * @memberof module:diary
+ * @global
  */
 class Diary extends Observable {
 

@@ -1,4 +1,4 @@
-# domodel-diary [![Build Status](https://travis-ci.com/thoughtsunificator/domodel-diary.svg?branch=master)](https://travis-ci.com/thoughtsunificator/domodel-diary)
+# domodel-diary
 
 Universal password protected diary application
 
