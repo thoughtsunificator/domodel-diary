@@ -5,7 +5,6 @@ import { EventListener } from "domodel"
  */
 class AuthViewEventListener extends EventListener {
 
-
 	/**
 	 *
 	 */

@@ -1,4 +1,3 @@
-import CryptoES from "crypto-es";
 import { Binding } from "domodel"
 import { Router, Route, RouterModel, RouterBinding } from "@domodel/router"
 

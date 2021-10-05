@@ -17,6 +17,7 @@ class CalendarEventListener extends EventListener {
 	 * @param {object}  data
 	 * @param {Date}    data.date
 	 * @param {boolean} data.rebuild
+	 * @example calendar.emit("setDate", { date: new Date() })
 	 */
 	setDate(data) {
 		const { diary } = this.properties

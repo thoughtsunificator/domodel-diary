@@ -9,7 +9,7 @@ class DiaryEventListener extends EventListener {
 
 	/**
 	 * @name login
-	 * @memberOf AuthViewEventListener
+	 * @memberOf DiaryEventListener
 	 * @function
 	 * @param {string} password
 	 *

@@ -1,4 +1,3 @@
-import CryptoES from "crypto-es"
 import { Binding } from "domodel"
 import { PopupModel, PopupBinding, Popup } from "@domodel/popup"
 
@@ -32,7 +31,7 @@ class DiaryViewBinding extends Binding {
 
 	onCreated() {
 
-		const { diary } = this.properties
+		const { diary, router } = this.properties
 
 		this.popup = new Popup()
 		this.textFileURL = null
@@ -51,7 +50,7 @@ class DiaryViewBinding extends Binding {
 		})
 
 		this.identifier.menu.addEventListener("click", () => {
-			diary.emit("openSettings")
+			router.view.emit("openSettings")
 		})
 
 		this.identifier.addNote.addEventListener("click", () => diary.editor.emit("open"))

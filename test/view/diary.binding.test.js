@@ -184,7 +184,7 @@ describe("DiaryViewBinding", () => {
 		const binding = new DiaryViewBinding({ diary, router })
 		rootBinding.run(DiaryViewModel(), { binding })
 		let emitted = false
-		diary.listen("openSettings", () => {
+		router.view.listen("openSettings", () => {
 			emitted = true
 		})
 		binding.identifier.menu.dispatchEvent(new window.Event("click"))

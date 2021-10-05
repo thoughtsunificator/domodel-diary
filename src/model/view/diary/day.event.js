@@ -5,6 +5,16 @@ import { EventListener } from "domodel"
  */
 class DayEventListener extends EventListener {
 
+
+
+	updateIndicator(toggle) {
+		if(toggle) {
+			this.root.classList.add("content")
+		} else {
+			this.root.classList.remove("content")
+		}
+	}
+
 	/**
 	 *
 	 */
