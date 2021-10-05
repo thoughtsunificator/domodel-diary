@@ -26,7 +26,7 @@ class NotesBinding extends Binding {
 
 		this.paginator = new Paginator(3)
 
-		this.listen(this.paginator, "items changed", () => {
+		this.listen(this.paginator, "itemsChanged", () => {
 			if(this.paginator.items.length === 0) {
 				this.identifier.list.style.display = "none"
 				this.identifier.placeholder.style.display = ""
@@ -36,7 +36,7 @@ class NotesBinding extends Binding {
 			}
 		})
 
-		this.listen(diary.calendar, "set date", () => this.render())
+		this.listen(diary.calendar, "setDate", () => this.render())
 
 		this.run(PaginatorModel, {
 			parentNode: this.identifier.list,
@@ -54,7 +54,7 @@ class NotesBinding extends Binding {
 	 */
 	render() {
 		const notes = this.properties.diary.notes.byDate(this.properties.diary.calendar.date).slice().sort(((a, b) => a.date - b.date))
-		this.paginator.emit("items set", notes.slice().reverse().map((note => new Item(NoteModel, NoteBinding, { note }))))
+		this.paginator.emit("itemsSet", notes.slice().reverse().map((note => new Item(NoteModel, NoteBinding, { note }))))
 	}
 
 }

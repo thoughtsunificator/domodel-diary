@@ -23,7 +23,7 @@ class SettingsBinding extends PopupBinding {
 
 		this.identifier.export.addEventListener("click", (() => router.view.emit("export")))
 		this.identifier.import.addEventListener("click", (() => router.view.emit("import")))
-		this.identifier.logout.addEventListener("click", (() => router.view.emit("logout")))
+		this.identifier.logout.addEventListener("click", (() => diary.emit("logout")))
 
 	}
 

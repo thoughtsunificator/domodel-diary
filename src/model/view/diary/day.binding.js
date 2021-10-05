@@ -24,16 +24,6 @@ class DayBinding extends Binding {
 			this.root.classList.add("content")
 		}
 
-		this.listen(diary.notes, "add", () => {
-			this.root.classList.add("content")
-		})
-
-		this.listen(diary.notes, "remove", () => {
-			if(diary.notes.byDate(day.date).length === 0) {
-				this.root.classList.remove("content")
-			}
-		})
-
 		this.root.addEventListener("click", () => diary.calendar.emit("setDate", { date: day.date }))
 
 	}
