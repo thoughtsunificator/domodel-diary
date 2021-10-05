@@ -22,29 +22,22 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-describe("diary", () => {
+describe("DiaryBinding", () => {
 
 	beforeEach(() => {
-
 		rootBinding = new Binding()
 		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-
 	})
 
 	afterEach(() => {
-
 		rootBinding.remove()
-
 	})
 
 	it("instance", () => {
-
-		assert.ok(new DiaryBinding() instanceof Binding)
-
+		assert.ok(DiaryBinding.prototype instanceof Binding)
 	})
 
 	it("onCreated", () => {
-
 		const diary = new Diary()
 		const binding = new DiaryBinding({ diary })
 		rootBinding.run(DiaryModel, { binding })
@@ -59,38 +52,31 @@ describe("diary", () => {
 		assert.strictEqual(router.routes[1].match, "/diary")
 		assert.deepEqual(router.routes[1].model, DiaryViewModel)
 		assert.deepEqual(router.routes[1].binding, DiaryViewBinding)
-
 	})
 
 	it("reset", () => {
-
 		const diary = new Diary()
 		diary.firstRun = false
 		const binding = new DiaryBinding({ diary })
 		rootBinding.run(DiaryModel, { binding })
 		diary.listen("logout", () => {
 			assert.strictEqual(diary.firstRun, true)
-
 		})
 		diary.emit("reset")
-
 	})
 
 	it("logout", () => {
-
 		const diary = new Diary()
-		diary.notes.push(new Note("cxzcxz", new Date()))
+		diary.notes.add("cxzcxz", new Date())
 		const binding = new DiaryBinding({ diary })
 		rootBinding.run(DiaryModel, { binding })
 		const router = binding._children[0].properties.router
 		router.listen("browse", data => {
 			assert.strictEqual(data.path, "/")
-			assert.deepEqual(diary._notes, [])
+			assert.deepEqual(diary.notes.notesList, [])
 			assert.strictEqual(diary.password, null)
-
 		})
 		diary.emit("logout")
-
 	})
 
 })

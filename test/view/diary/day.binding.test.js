@@ -17,33 +17,26 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-describe("view/diary/day", () => {
+describe("DayBinding", () => {
 
 	beforeEach(() => {
-
 		rootBinding = new Binding()
 		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-
 	})
 
 	afterEach(() => {
 		rootBinding.remove()
-
 	})
 
 	it("instance", () => {
-
-			assert.ok(new DayBinding() instanceof Binding)
-
+		assert.ok(DayBinding.prototype instanceof Binding)
 	})
 
 	it("onCreated", () => {
-
 		const diary = new Diary()
 		const day = new Day(new Date())
 		const binding = new DayBinding({ diary, day })
 		rootBinding.run(DayModel(day), { binding })
-
 	})
 
 	it("select", () => {
@@ -63,7 +56,6 @@ describe("view/diary/day", () => {
 	})
 
 	it("click", () => {
-
 		const diary = new Diary()
 		const day = new Day(new Date())
 		const binding = new DayBinding({ diary, day })
@@ -73,7 +65,6 @@ describe("view/diary/day", () => {
 
 		})
 		binding.root.dispatchEvent(new window.Event('click'))
-
 	})
 
 })

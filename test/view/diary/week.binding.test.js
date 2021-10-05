@@ -15,33 +15,25 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-describe("view/diary/week", () => {
+describe("WeekBinding", () => {
 
 	beforeEach(() => {
-
 		rootBinding = new Binding()
 		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-
 	})
 
 	afterEach(() => {
-
 		rootBinding.remove()
-
 	})
 
 	it("instance", () => {
-
-			assert.ok(new WeekBinding() instanceof Binding)
-
+		assert.ok(WeekBinding.prototype instanceof Binding)
 	})
 
 	it("onCreated", () => {
-
 		// const diary = new Diary()
 		// const binding = new WeekBinding({ diary })
 		// rootBinding.run(WeekModel, { binding })
-
 	})
 
 	it("remove", () => {

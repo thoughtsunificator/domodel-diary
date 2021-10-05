@@ -15,32 +15,25 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-describe("view/diary/notes", () => {
+describe("NotesBinding", () => {
 
 	beforeEach(() => {
-
 		rootBinding = new Binding()
 		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-
 	})
 
 	afterEach(() => {
-
 		rootBinding.remove()
-
 	})
 
 	it("instance", () => {
-
-			assert.ok(new NotesBinding() instanceof Binding)
-
+		assert.ok(NotesBinding.prototype instanceof Binding)
 	})
 
 	it("onCreated", () => {
 		// const diary = new Diary()
 		// const binding = new NotesBinding({ diary })
 		// rootBinding.run(NotesModel, { binding })
-
 	})
 
 	it("render", () => {

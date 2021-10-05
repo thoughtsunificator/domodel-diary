@@ -1,35 +1,43 @@
 import { Binding } from "domodel"
 
-export default class extends Binding {
+import DayEventListener from "./day.event.js"
+
+/**
+ * @global
+ */
+class DayBinding extends Binding {
+
+	/**
+	 * @param {object} properties
+	 * @param {Diary}  properties.diary
+	 * @param {Day}    properties.day
+	 */
+	constructor(properties) {
+		super(properties, new DayEventListener(properties.day))
+	}
 
 	onCreated() {
 
 		const { diary, day } = this.properties
 
-		if(diary.getNotesByDate(day.date).length >= 1) {
+		if(diary.notes.byDate(day.date).length >= 1) {
 			this.root.classList.add("content")
 		}
 
-		this.listen(day, "select", () => {
-			this.root.classList.add("active")
-		})
-
-		this.listen(day, "unselect", () => {
-			this.root.classList.remove("active")
-		})
-
-		this.listen(day, "notes added", () => {
+		this.listen(diary.notes, "add", () => {
 			this.root.classList.add("content")
 		})
 
-		this.listen(day, "notes removed", () => {
-			if(diary.getNotesByDate(day.date).length === 0) {
+		this.listen(diary.notes, "remove", () => {
+			if(diary.notes.byDate(day.date).length === 0) {
 				this.root.classList.remove("content")
 			}
 		})
 
-		this.root.addEventListener("click", () => diary.calendar.emit("set date", { date: day.date }))
+		this.root.addEventListener("click", () => diary.calendar.emit("setDate", { date: day.date }))
 
 	}
 
 }
+
+export default DayBinding

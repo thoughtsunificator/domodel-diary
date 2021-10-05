@@ -16,32 +16,25 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-describe("view/diary/settings", () => {
+describe("SettingsBinding", () => {
 
 	beforeEach(() => {
-
 		rootBinding = new Binding()
 		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-
 	})
 
 	afterEach(() => {
-
 		rootBinding.remove()
-
 	})
 
 	it("instance", () => {
-
-			assert.ok(new SettingsBinding() instanceof PopupBinding)
-
+		assert.ok(SettingsBinding.prototype instanceof Binding)
 	})
 
 	it("onCreated", () => {
 		// const diary = new Diary()
 		// const binding = new SettingsBinding({ diary })
 		// rootBinding.run(SettingsModel, { binding })
-
 	})
 
 	it("settingsPopup", () => {

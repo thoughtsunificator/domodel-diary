@@ -15,25 +15,19 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-describe("view/diary/calendar", () => {
+describe("CalendarBinding", () => {
 
 	beforeEach(() => {
-
 		rootBinding = new Binding()
 		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-
 	})
 
 	afterEach(() => {
-
 		rootBinding.remove()
-
 	})
 
 	it("instance", () => {
-
-			assert.ok(new CalendarBinding() instanceof Binding)
-
+		assert.ok(CalendarBinding.prototype instanceof Binding)
 	})
 
 	it("onCreated", () => {

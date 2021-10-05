@@ -1,14 +1,12 @@
-/** @module week */
-
 import { Observable } from "domodel"
 
 /**
- * @memberof module:week
+ * @global
  */
 class Week extends Observable {
 
 	/**
-	 * @param  {number} number
+	 * @param {number} number
 	 */
 	constructor(number) {
 		super()

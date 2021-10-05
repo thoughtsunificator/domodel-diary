@@ -2,35 +2,51 @@ import CryptoES from "crypto-es";
 import { Binding } from "domodel"
 import { Router, Route, RouterModel, RouterBinding } from "@domodel/router"
 
-import AuthModel from "./view/auth.js"
-import DiaryModel from "./view/diary.js"
+import DiaryEventListener from "./diary.event.js"
 
-import AuthBinding from "./view/auth.binding.js"
-import DiaryBinding from "./view/diary.binding.js"
+import AuthViewModel from "./view/auth.js"
+import DiaryViewModel from "./view/diary.js"
 
-export default class extends Binding {
+import AuthViewBinding from "./view/auth.binding.js"
+import DiaryViewBinding from "./view/diary.binding.js"
+
+/**
+ * @global
+ */
+class DiaryBinding extends Binding {
+
+	/**
+	 * @param {object} properties
+	 * @param {Diary} properties.diary
+	 */
+	constructor(properties) {
+		super(properties, new DiaryEventListener(properties.diary))
+	}
 
 	onCreated() {
 
 		const { diary } = this.properties
 
-		const router = new Router([
-			new Route("/", AuthModel, AuthBinding),
-			new Route("/diary", DiaryModel, DiaryBinding)
+		this.router = new Router([
+			new Route("/", AuthViewModel, AuthViewBinding),
+			new Route("/diary", DiaryViewModel, DiaryViewBinding)
 		], Router.TYPE.VIRTUAL)
 
-		this.listen(diary, "reset", () => {
-			diary.firstRun = true
-			diary.emit("logout")
-		})
-
-		this.listen(diary, "logout", () => {
-			diary.password = null
-			diary.clearNotes()
-			router.emit("browse", { path: "/" })
-		})
-		this.run(RouterModel, { binding: new RouterBinding({ router }) })
+		this.run(RouterModel, { binding: new RouterBinding({ router: this.router }) })
 
 	}
 
+	/**
+	 * @type {Router}
+	 */
+	get router() {
+		return this._router
+	}
+
+	set router(router) {
+		this._router = router
+	}
+
 }
+
+export default DiaryBinding

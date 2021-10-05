@@ -1,9 +1,7 @@
-/** @module note */
-
 import { Observable } from "domodel"
 
 /**
- * @memberof module:note
+ * @global
  */
 class Note extends Observable {
 
