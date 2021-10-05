@@ -5,8 +5,9 @@ import { EventListener } from "domodel"
  */
 class DayEventListener extends EventListener {
 
-
-
+	/**
+	 * @param {boolean} toggle
+	 */
 	updateIndicator(toggle) {
 		if(toggle) {
 			this.root.classList.add("content")
