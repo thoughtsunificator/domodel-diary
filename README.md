@@ -15,8 +15,6 @@ Universal password protected diary application
 ### Usage
 
 ```javascript
-import "assets/main.css"
-
 import { Core } from "domodel"
 import { DiaryModel, DiaryBinding, Diary } from "domodel-diary"
 
