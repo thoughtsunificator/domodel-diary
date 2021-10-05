@@ -1,6 +1,8 @@
 import { Observable } from "domodel"
 
 import Calendar from "./calendar.js"
+import Editor from "./editor.js"
+import Notes from "./notes.js"
 import Note from "./note.js"
 
 /**
@@ -8,76 +10,37 @@ import Note from "./note.js"
  */
 class Diary extends Observable {
 
+	/**
+	 * @param {Date} date
+	 */
 	constructor(date = new Date()) {
 		super()
 		this._calendar = new Calendar(date)
+		this._editor = new Editor()
 		this._password = null
-		this._notes = []
+		this._notes = new Notes()
 		this._firstRun = true
 	}
 
 	/**
-	 * @param {string} content
-	 * @param {Date}   date
-	 */
-	addNote(content, date) {
-		const note = new Note(content, date)
-		this.notes.push(note)
-		return note
-	}
-
-	/**
-	 * @return {Note[]}
-	 */
-	getNotesByDate(date) {
-		return this.notes.filter(note => note.date.getMonth() === date.getMonth() && note.date.getFullYear() === date.getFullYear() && note.date.getDate() === date.getDate())
-	}
-
-	/**
-	 * @param {Note} note
-	 */
-	removeNote(note) {
-		this.notes.splice(this.notes.indexOf(note), 1)
-	}
-
-	/**
-	 * @param {Note} note
-	 * @param {object} data
-	 */
-	updateNote(note, data) {
-		for(const key in data) {
-			note[key] = data[key]
-		}
-	}
-
-	clearNotes() {
-		this._notes = []
-	}
-
-	/**
-	 * @returns {string}
-	 */
-	toString() {
-		return JSON.stringify(this.notes.map(note => ({
-			content: note.content,
-			date: note.date
-		})))
-	}
-
-	/**
+	 * @readonly
 	 * @type {Calendar}
 	 */
 	get calendar() {
 		return this._calendar
 	}
 
-	set calendar(calendar) {
-		this._calendar = calendar
+	/**
+	 * @readonly
+	 * @type {Editor}
+	 */
+	get editor() {
+		return this._editor
 	}
 
 	/**
 	 * @readonly
-	 * @type {Note[]}
+	 * @type {Notes}
 	 */
 	get notes() {
 		return this._notes

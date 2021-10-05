@@ -5,6 +5,9 @@ import { Observable } from "domodel"
  */
 class Calendar extends Observable {
 
+	/**
+	 * @param   {Date} date
+	 */
 	constructor(date) {
 		super()
 		this._date = date

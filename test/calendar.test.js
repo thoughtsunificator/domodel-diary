@@ -6,10 +6,9 @@ import Calendar from "../src/object/calendar.js"
 describe("calendar", () => {
 
 	it("instance", () => {
-
 		const date = new Date()
 		const calendar = new Calendar(date)
-		assert.ok(calendar instanceof Observable)
+		assert.ok(Calendar.prototype instanceof Observable)
 		assert.strictEqual(calendar.date, date)
 		assert.strictEqual(calendar.weeks, null)
 		assert.strictEqual(calendar.day, null)
@@ -18,7 +17,6 @@ describe("calendar", () => {
 			calendar.day = ""
 			calendar.date = new Date()
 		})
-
 	})
 
 })

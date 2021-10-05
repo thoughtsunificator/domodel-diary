@@ -1,22 +1,32 @@
 import { Binding } from "domodel"
 import { PopupBinding } from "@domodel/popup"
 
-export default class extends PopupBinding {
+/**
+ * @global
+ */
+class SettingsBinding extends PopupBinding {
+
+	/**
+	 * @param {object} properties
+	 * @param {Diary}  properties.diary
+	 * @param {Popup}  properties.popup
+	 */
+	constructor(properties) {
+		super(properties)
+	}
 
 	onCreated() {
 
 		super.onCreated()
 
-		const { diary, popup } = this.properties
+		const { diary, popup, router } = this.properties
 
-		this.listen(diary, "settings popup", (() => {
-			popup.emit("show")
-		}))
-
-		this.identifier.export.addEventListener("click", (() => diary.emit("export")))
-		this.identifier.import.addEventListener("click", (() => diary.emit("import")))
-		this.identifier.logout.addEventListener("click", (() => diary.emit("logout")))
+		this.identifier.export.addEventListener("click", (() => router.view.emit("export")))
+		this.identifier.import.addEventListener("click", (() => router.view.emit("import")))
+		this.identifier.logout.addEventListener("click", (() => router.view.emit("logout")))
 
 	}
 
 }
+
+export default SettingsBinding

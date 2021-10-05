@@ -16,11 +16,11 @@
 		"mocha": "^9.1.1"
 	},
 	"dependencies": {
-		"@domodel/paginator": "^1.0.2",
-		"@domodel/popup": "^1.0.2",
-		"@domodel/router": "^1.0.4",
+		"@domodel/paginator": "^1.0.9",
+		"@domodel/popup": "^1.0.11",
+		"@domodel/router": "^1.0.22",
 		"crypto-es": "^1.2.7",
-		"domodel": "^1.0.31"
+		"domodel": "^1.0.46"
 	},
 	"repository": {
 		"type": "git",

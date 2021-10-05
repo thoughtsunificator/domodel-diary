@@ -6,7 +6,7 @@ import { Observable } from "domodel"
 class Week extends Observable {
 
 	/**
-	 * @param  {number} number
+	 * @param {number} number
 	 */
 	constructor(number) {
 		super()

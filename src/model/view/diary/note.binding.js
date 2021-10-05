@@ -1,7 +1,22 @@
 import { Binding } from "domodel"
 import { ItemBinding } from "@domodel/paginator"
 
-export default class extends ItemBinding {
+import NoteEventListener from "./note.event.js"
+
+/**
+ * @global
+ */
+class NoteBinding extends ItemBinding {
+
+	/**
+	 * @param {object} properties
+	 * @param {Diary}  properties.diary
+	 * @param {Day}    properties.day
+	 * @param {Note}   properties.note
+	 */
+	constructor(properties) {
+		super(properties, new NoteEventListener(properties.note))
+	}
 
 	onCreated() {
 
@@ -9,15 +24,11 @@ export default class extends ItemBinding {
 
 		const { diary, day, note } = this.properties
 
-		this.listen(note, "remove", () => this.remove())
-
-		this.listen(note, "update", () => {
-			this.identifier.content.textContent = note.content
-		})
-
-		this.identifier.edit.addEventListener("click", () => diary.emit("editor open", note))
-		this.identifier.remove.addEventListener("click", () => diary.emit("notes remove", note))
+		this.identifier.edit.addEventListener("click", () => diary.editor.emit("open", note))
+		this.identifier.remove.addEventListener("click", () => diary.notes.emit("remove", note))
 
 	}
 
 }
+
+export default NoteBinding

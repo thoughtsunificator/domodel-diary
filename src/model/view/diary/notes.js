@@ -5,7 +5,7 @@ export default {
 		{
 			tagName: "div",
 			identifier: "placeholder",
-			textContent: "List is empty."
+			textContent: "That's where your notes should be."
 		},
 		{
 			tagName: "div",

@@ -1,26 +1,31 @@
 import CryptoES from "crypto-es";
 import { Binding } from "domodel"
 
-export default class extends Binding {
+import AuthViewEventListener from "./auth.event.js"
+
+/**
+ * @global
+ */
+class AuthViewBinding extends Binding {
+
+	/**
+	 * @param {object} properties
+	 * @param {Diary}  properties.diary
+	 * @param {Router} properties.router
+	 */
+	constructor(properties) {
+		super(properties, new AuthViewEventListener(properties.router.view))
+	}
 
 	onCreated() {
 
-		const { diary, router } = this.properties
+		const { diary } = this.properties
 
 		if(diary.firstRun) {
 			this.identifier.status.textContent = "Welcome. First, set your password.\nIt will be used to decrypt your notes."
 		} else {
 			this.identifier.status.textContent = "Welcome back."
 		}
-
-		this.listen(diary, "auth success", () => {
-			diary.firstRun = false
-			router.emit("browse", { path: "/diary" })
-		})
-
-		this.listen(diary, "auth fail", () => {
-			this.identifier.status.textContent = "Authentication failed."
-		})
 
 		this.identifier.reset.addEventListener("click", (() => {
 			this.identifier.confirmErase.style.visibility = ""
@@ -44,3 +49,5 @@ export default class extends Binding {
 	}
 
 }
+
+export default AuthViewBinding
