@@ -6,7 +6,7 @@ import { EventListener } from "domodel"
 class AuthViewEventListener extends EventListener {
 
 	/**
-	 *
+	 * @event AuthViewEventListener#success
 	 */
 	success() {
 		this.properties.diary.firstRun = false
@@ -14,7 +14,7 @@ class AuthViewEventListener extends EventListener {
 	}
 
 	/**
-	 *
+	 * @event AuthViewEventListener#fail
 	 */
 	fail() {
 		this.identifier.status.textContent = "Authentication failed."

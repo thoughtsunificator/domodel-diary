@@ -6,9 +6,10 @@ import { EventListener } from "domodel"
 class NotesEventListener extends EventListener {
 
 	/**
-	 * @param {object} data
-	 * @param {object} data.form
-	 * @param {string} data.form.content
+	 * @event NotesEventListener#add
+	 * @property {object} data
+	 * @property {object} data.form
+	 * @property {string} data.form.content
 	 */
 	add(data) {
 		const { diary } = this.properties
@@ -20,10 +21,11 @@ class NotesEventListener extends EventListener {
 	}
 
 	/**
-	 * @param {object} data
-	 * @param {Note}   date.note
-	 * @param {object} data.form
-	 * @param {string} data.form.content
+	 * @event NotesEventListener#update
+	 * @property {object} data
+	 * @property {Note}   date.note
+	 * @property {object} data.form
+	 * @property {string} data.form.content
 	 */
 	update(data) {
 		const { diary } = this.properties
@@ -35,7 +37,8 @@ class NotesEventListener extends EventListener {
 	}
 
 	/**
-	 * @param {Note} note
+	 * @event NotesEventListener#remove
+	 * @property {Note} note
 	 */
 	remove(note) {
 		const { diary } = this.properties
@@ -47,7 +50,7 @@ class NotesEventListener extends EventListener {
 	}
 
 	/**
-	 *
+	 * @event NotesEventListener#clear
 	 */
 	clear() {
 		const { diary } = this.properties

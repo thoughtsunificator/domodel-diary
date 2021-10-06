@@ -6,7 +6,7 @@ import { EventListener } from "domodel"
 class WeekEventListener extends EventListener {
 
 	/**
-	 *
+	 * @event WeekEventListener#remove
 	 */
 	remove() {
 		this.remove()
