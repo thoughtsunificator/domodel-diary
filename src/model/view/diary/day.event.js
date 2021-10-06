@@ -6,7 +6,8 @@ import { EventListener } from "domodel"
 class DayEventListener extends EventListener {
 
 	/**
-	 * @param {boolean} toggle
+	 * @event DayEventListener#updateIndicator
+	 * @property {boolean} toggle
 	 */
 	updateIndicator(toggle) {
 		if(toggle) {
@@ -17,14 +18,14 @@ class DayEventListener extends EventListener {
 	}
 
 	/**
-	 *
+	 * @event DayEventListener#select
 	 */
 	select() {
 		this.root.classList.add("active")
 	}
 
 	/**
-	 *
+	 * @event DayEventListener#unselect
 	 */
 	unselect() {
 		this.root.classList.remove("active")

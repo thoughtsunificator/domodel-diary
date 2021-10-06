@@ -7,21 +7,17 @@ import { EventListener } from "domodel"
 class DiaryViewEventListener extends EventListener {
 
 	/**
-	 * @name exported
-	 * @memberOf DiaryViewEventListener
-	 * @function
+	 * @event DiaryViewEventListener#exported
 	 *
 	*/
 
 	/**
-	 * @name imported
-	 * @memberOf DiaryViewEventListener
-	 * @function
+	 * @event DiaryViewEventListener#imported
 	 *
 	*/
 
 	/**
-	 *
+	 * @event DiaryViewEventListener#export
 	 */
 	export() {
 		const { diary } = this.properties
@@ -42,7 +38,7 @@ class DiaryViewEventListener extends EventListener {
 	}
 
 	/**
-	 *
+	 * @event DiaryViewEventListener#import
 	 */
 	import() {
 		const { diary } = this.properties
@@ -71,7 +67,7 @@ class DiaryViewEventListener extends EventListener {
 	}
 
 	/**
-	 *
+	 * @event DiaryViewEventListener#openSettings
 	 */
 	openSettings() {
 		this.popup.emit("show")

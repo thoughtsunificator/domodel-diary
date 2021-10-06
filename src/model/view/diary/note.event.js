@@ -6,14 +6,14 @@ import { EventListener } from "domodel"
 class NoteEventListener extends EventListener {
 
 	/**
-	 *
+	 * @event NoteEventListener#remove
 	 */
 	remove() {
 		this.remove()
 	}
 
 	/**
-	 *
+	 * @event NoteEventListener#update
 	 */
 	update() {
 		this.identifier.content.textContent = note.content

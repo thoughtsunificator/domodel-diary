@@ -6,7 +6,8 @@ import { EventListener } from "domodel"
 class EditorEventListener extends EventListener {
 
 	/**
-	 * @param {Note} note
+	 * @event EditorEventListener#open
+	 * @property {Note} note
 	 */
 	open(note) {
 		const { diary } = this.properties
@@ -24,7 +25,7 @@ class EditorEventListener extends EventListener {
 	}
 
 	/**
-	 *
+	 * @event EditorEventListener#close
 	 */
 	close() {
 		const { diary } = this.properties

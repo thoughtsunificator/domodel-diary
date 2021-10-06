@@ -8,15 +8,13 @@ import AuthViewBinding from "./view/auth.binding.js"
 class DiaryEventListener extends EventListener {
 
 	/**
-	 * @name login
-	 * @memberOf DiaryEventListener
-	 * @function
-	 * @param {string} password
+	 * @event DiaryEventListener#login
+	 * @property {string} password
 	 *
 	*/
 
 	/**
-	 *
+	 * @event DiaryEventListener#authSuccess
 	 */
 	authSuccess() {
 		if(this.router.view.binding instanceof AuthViewBinding) {
@@ -25,7 +23,7 @@ class DiaryEventListener extends EventListener {
 	}
 
 	/**
-	 *
+	 * @event DiaryEventListener#authFail
 	 */
 	authFail() {
 		if(this.router.view.binding instanceof AuthViewBinding) {
@@ -34,7 +32,7 @@ class DiaryEventListener extends EventListener {
 	}
 
 	/**
-	 *
+	 * @event DiaryEventListener#reset
 	 */
 	reset() {
 		const { diary } = this.properties
@@ -43,7 +41,7 @@ class DiaryEventListener extends EventListener {
 	}
 
 	/**
-	 *
+	 * @event DiaryEventListener#logout
 	 */
 	logout() {
 		const { diary } = this.properties

@@ -14,9 +14,10 @@ import Calendar from "../../../object/calendar.js"
 class CalendarEventListener extends EventListener {
 
 	/**
-	 * @param {object}  data
-	 * @param {Date}    data.date
-	 * @param {boolean} data.rebuild
+	 * @event CalendarEventListener#setDate
+	 * @property {object}  data
+	 * @property {Date}    data.date
+	 * @property {boolean} data.rebuild
 	 * @example calendar.emit("setDate", { date: new Date() })
 	 */
 	setDate(data) {
@@ -62,7 +63,8 @@ class CalendarEventListener extends EventListener {
 	}
 
 	/**
-	 * @param {number} month
+	 * @event CalendarEventListener#setMonth
+	 * @property {number} month
 	 */
 	setMonth(month) {
 		const { diary } = this.properties
@@ -84,7 +86,8 @@ class CalendarEventListener extends EventListener {
 	}
 
 	/**
-	 * @param {number} year
+	 * @event CalendarEventListener#setYear
+	 * @property {number} year
 	 */
 	setYear(year) {
 		const { diary } = this.properties
