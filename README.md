@@ -20,12 +20,12 @@ import { DiaryModel, DiaryBinding, Diary } from "domodel-diary"
 
 window.addEventListener("load", function() {
 
-	const diary = new Diary()
+  const diary = new Diary()
 
-	Core.run(DiaryModel, {
-		binding: new DiaryBinding({ diary }),
-		parentNode: document.body
-	})
+  Core.run(DiaryModel, {
+    binding: new DiaryBinding({ diary }),
+    parentNode: document.body
+  })
 
 })
 
