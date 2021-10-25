@@ -34,6 +34,6 @@ window.addEventListener("load", function() {
 ### Demos
 
 - [domodel-diary-web](https://github.com/thoughtsunificator/domodel-diary-web)
-- [domodel-diary-extension](https://github.com/thoughtsunificator/domodel-extension)
-- [domodel-diary-electron](https://github.com/thoughtsunificator/domodel-electron)
-- [domodel-diary-cordova](https://github.com/thoughtsunificator/domodel-cordova)
+- [domodel-diary-extension](https://github.com/thoughtsunificator/domodel-diary-extension)
+- [domodel-diary-electron](https://github.com/thoughtsunificator/domodel-diary-electron)
+- [domodel-diary-cordova](https://github.com/thoughtsunificator/domodel-diary-cordova)
