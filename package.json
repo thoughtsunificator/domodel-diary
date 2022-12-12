@@ -18,7 +18,7 @@
 	"dependencies": {
 		"@domodel/paginator": "^1.0.10",
 		"@domodel/popup": "^1.0.11",
-		"@domodel/router": "^1.0.24",
+		"@domodel/router": "1.0.24",
 		"crypto-es": "^1.2.7",
 		"domodel": "^1.0.46"
 	},
