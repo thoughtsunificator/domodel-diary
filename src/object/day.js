@@ -8,9 +8,10 @@ class Day extends Observable {
 	/**
 	 * @param {Date} date
 	 */
-	constructor(date) {
+	constructor(date, grayed=false) {
 		super()
 		this._date = date
+		this._grayed = grayed
 	}
 
 	/**
@@ -19,6 +20,15 @@ class Day extends Observable {
 	 */
 	get date() {
 		return this._date
+	}
+
+
+	/**
+	 * @readonly
+	 * @type {Date}
+	 */
+	get grayed() {
+		return this._grayed
 	}
 
 }

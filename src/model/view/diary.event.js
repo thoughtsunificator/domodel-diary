@@ -30,7 +30,7 @@ class DiaryViewEventListener extends EventListener {
 		})
 		const date = new Date()
 		this.textFileURL = URL.createObjectURL( blob )
-		const anchor = document.createElement("a")
+		const anchor = this.root.ownerDocument.createElement("a")
 		anchor.href = this.textFileURL
 		anchor.download = `backup-domodel-diary-${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}.txt`
 		anchor.click()
@@ -42,7 +42,7 @@ class DiaryViewEventListener extends EventListener {
 	 */
 	import() {
 		const { diary } = this.properties
-		const inputFileNode = document.createElement("input")
+		const inputFileNode = this.root.ownerDocument.createElement("input")
 		inputFileNode.type = "file"
 		inputFileNode.style.display = "none"
 		inputFileNode.addEventListener("input", (event) => {

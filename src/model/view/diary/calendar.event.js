@@ -37,13 +37,21 @@ class CalendarEventListener extends EventListener {
 			}
 			calendar.weeks = []
 			const daysCount = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+			const firstDay = new Date(date.getFullYear(), date.getMonth())
 			const days = [...Array(daysCount).keys()]
 			let week = new Week(1)
+			for(let i =firstDay.getDay(); i > 0;i--) {
+				const previousMonthDate = new Date(date)
+				previousMonthDate.setMonth(date.getMonth() - 1)
+				const previousMonthDaysCount = new Date(previousMonthDate.getFullYear(), previousMonthDate.getMonth() + 1, 0).getDate()
+				previousMonthDate.setDate(previousMonthDaysCount - i + 1)
+				week.days.push(new Day(previousMonthDate, true))
+			}
 			for(let i = 1; i < days.length + 1; i++) {
 				const dayDate = new Date(date)
 				dayDate.setDate(i)
 				week.days.push(new Day(dayDate))
-				if(i % 7 === 0 || i === days.length) {
+				if(week.days.length === 7 || i === days.length) {
 					calendar.weeks.push(week)
 					week = new Week(week.number + 1)
 				}
@@ -58,7 +66,7 @@ class CalendarEventListener extends EventListener {
 		}
 		const previousDate = calendar.date
 		calendar.date = date
-		calendar.day = calendar.weeks.map(week => week.days).flat().find(day => day.date.getDate() === date.getDate())
+		calendar.day = calendar.weeks.map(week => week.days).flat().find(day => day.date.getDate() === date.getDate() && day.date.getMonth() === date.getMonth())
 		calendar.day.emit("select")
 	}
 
