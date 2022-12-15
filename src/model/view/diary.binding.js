@@ -36,6 +36,7 @@ class DiaryViewBinding extends Binding {
 		this.popup = new Popup()
 		this.textFileURL = null
 		this.interval = null
+		this.inactivity_timer_delay = this.properties.inactivity_timer_delay || DiaryViewBinding.INACTIVITY_TIMER_DELAY
 
 		this.listen(diary, "logout", () => {
 			this.stopInactivityTimer()
@@ -61,11 +62,11 @@ class DiaryViewBinding extends Binding {
 	}
 
 	startInactivityTimer() {
-		this.interval = this.root.ownerDocument.defaultView.setInterval(() => this.properties.diary.emit("logout"), DiaryViewBinding.INACTIVITY_TIMER_DELAY)
+		this.interval = this.root.ownerDocument.defaultView.setInterval(() => this.properties.diary.emit("logout"), this.inactivity_timer_delay)
 	}
 
 	stopInactivityTimer() {
-		clearInterval(this.interval)
+		this.root.ownerDocument.defaultView.clearInterval(this.interval)
 	}
 
 	restartInactivityTimer() {
