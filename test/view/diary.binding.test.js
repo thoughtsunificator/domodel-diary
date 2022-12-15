@@ -1,4 +1,4 @@
-import assert from "assert"
+import test from "ava"
 import { JSDOM } from "jsdom"
 import { Core, Binding, Observable } from "domodel"
 import { PopupModel, Popup } from "@domodel/popup"
@@ -18,193 +18,141 @@ import SettingsBinding from "../../src/model/view/diary/settings.binding.js"
 
 import Diary from "../../src/object/diary.js"
 
-const virtualDOM = new JSDOM()
-const window = virtualDOM.window
-const { document } = window
-
 const RootModel = { tagName: "div" }
-let rootBinding
 
-describe("DiaryViewBinding", () => {
+test.beforeEach((test) => {
+	test.context.virtualDOM = new JSDOM()
+	test.context.window = test.context.virtualDOM.window
+	test.context.document = test.context.window.document
+	test.context.rootBinding = new Binding()
+	Core.run(RootModel, { parentNode: test.context.document.body, binding: test.context.rootBinding })
+})
 
-	beforeEach(() => {
-		rootBinding = new Binding()
-		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	})
+test("DiaryViewBinding instance", (test) => {
+	test.true(DiaryViewBinding.prototype instanceof Binding)
+})
 
-	afterEach(() => {
-		rootBinding.remove()
-	})
+test("DiaryViewBinding onCreated", (test) => {
+	const diary = new Diary()
+	const router = new Router([])
+	router._view = new Observable()
+	const binding = new DiaryViewBinding({ diary, router })
+	test.context.rootBinding.run(DiaryViewModel(), { binding })
+	test.is(binding.textFileURL, null)
+	test.is(binding.interval, 1)
+	test.deepEqual(DiaryViewBinding.INACTIVITY_TIMER_DELAY, (60 * 1000) * 15)
+	test.deepEqual(binding._children[0].model, CalendarModel)
+	test.deepEqual(binding._children[1].model, NotesModel)
+	test.deepEqual(binding._children[2].model, EditorModel)
+	test.deepEqual(binding._children[3].model, PopupModel(SettingsModel))
+	test.deepEqual(binding._children[0].root, binding.identifier.content)
+	test.deepEqual(binding._children[1].root, binding.identifier.content)
+	test.true(binding._children[0] instanceof CalendarBinding)
+	test.true(binding._children[1] instanceof NotesBinding)
+	test.true(binding._children[2] instanceof EditorBinding)
+	test.true(binding._children[3] instanceof SettingsBinding)
+	test.true(binding._children[3].properties.popup instanceof Popup)
+	test.context.window.clearInterval(binding.interval)
+})
 
-	it("instance", () => {
-		assert.ok(DiaryViewBinding.prototype instanceof Binding)
-	})
-
-	it("onCreated", () => {
+test("DiaryViewBinding startInactivityTimer", test => {
+	return new Promise(resolve => {
 		const diary = new Diary()
-		const router = new Router([])
-		router.view = new Observable()
-		const binding = new DiaryViewBinding({ diary, router })
-		rootBinding.run(DiaryViewModel(), { binding })
-		assert.strictEqual(binding.textFileURL, null)
-		assert.strictEqual(binding.interval, 1)
-		assert.deepEqual(DiaryViewBinding.INACTIVITY_TIMER_DELAY, (60 * 1000) * 15)
-		assert.deepEqual(binding._children[0].model, CalendarModel)
-		assert.deepEqual(binding._children[1].model, NotesModel)
-		assert.deepEqual(binding._children[2].model, EditorModel)
-		assert.deepEqual(binding._children[3].model, PopupModel(SettingsModel))
-		assert.deepEqual(binding._children[0].root, binding.identifier.content)
-		assert.deepEqual(binding._children[1].root, binding.identifier.content)
-		assert.ok(binding._children[0] instanceof CalendarBinding)
-		assert.ok(binding._children[1] instanceof NotesBinding)
-		assert.ok(binding._children[2] instanceof EditorBinding)
-		assert.ok(binding._children[3] instanceof SettingsBinding)
-		assert.ok(binding._children[3].properties.popup instanceof Popup)
-		window.clearInterval(binding.interval)
-	})
-
-	// it("startInactivityTimer", () => {
-	// 	const diary = new Diary()
-	// 	const router = new Router([])
-	//  router.view = new Observable()
-	// 	const binding = new DiaryViewBinding({ diary, router })
-	// 	rootBinding.run(DiaryViewModel(), { binding })
-	// 	DiaryViewBinding.INACTIVITY_TIMER_DELAY = 120
-	// 	let emitted = false
-	// 	diary.listen("logout", () => {
-	// 		emitted = true
-	// 	})
-	// 	binding.startInactivityTimer()
-	// 	assert.strictEqual(binding.interval._idleTimeout, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.strictEqual(binding.interval._repeat, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.ok(emitted)
-	// })
-
-	// it("stopInactivityTimer", () => {
-	// 	const diary = new Diary()
-	// 	const router = new Router([])
-	//  router.view = new Observable()
-	// 	const binding = new DiaryViewBinding({ diary, router })
-	// 	rootBinding.run(DiaryViewModel(), { binding })
-	// 	binding.startInactivityTimer()
-	// 	binding.stopInactivityTimer()
-	// 	assert.strictEqual(binding.interval._idleTimeout, -1)
-	// 	assert.strictEqual(binding.interval._destroyed, true)
-	// 	assert.strictEqual(binding.interval._onTimeout, null)
-	// })
-
-	// it("restartInactivityTimer", () => {
-	// 	const diary = new Diary()
-	// 	const router = new Router([])
-	//  router.view = new Observable()
-	// 	const binding = new DiaryViewBinding({ diary, router })
-	// 	rootBinding.run(DiaryViewModel(), { binding })
-	// 	binding.startInactivityTimer()
-	// 	let timeoutId = binding.interval[Object.getOwnPropertySymbols(binding.interval)[2]]
-	// 	binding.restartInactivityTimer()
-	// 	assert.notStrictEqual(binding.interval[Object.getOwnPropertySymbols(binding.interval)[2]], timeoutId)
-	// 	assert.strictEqual(binding.interval._idleTimeout, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.strictEqual(binding.interval._repeat, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.strictEqual(binding.interval._destroyed, false)
-	// })
-
-	it("export_", () => {
-
-	})
-
-	it("import_", () => {
-
-	})
-
-	// it("authSuccess", () => {
-	// 	const diary = new Diary()
-	// 	const router = new Router([])
-	//  router.view = new Observable()
-	// 	const binding = new DiaryViewBinding({ diary, router })
-	// 	rootBinding.run(DiaryViewModel(), { binding })
-	// 	DiaryViewBinding.INACTIVITY_TIMER_DELAY = 120
-	// 	let emitted = false
-	// 	diary.listen("logout", () => {
-	// 		emitted = true
-	// 	})
-	// 	diary.emit("auth success")
-	// 	assert.strictEqual(binding.identifier.navigation.style.display, "block")
-	// 	assert.strictEqual(binding.interval._idleTimeout, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.strictEqual(binding.interval._repeat, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.ok(emitted)
-	// })
-
-	// it("logout", () => {
-	// 	const diary = new Diary()
-	// 	const router = new Router([])
-	//  router.view = new Observable()
-	// 	const binding = new DiaryViewBinding({ diary, router })
-	// 	rootBinding.run(DiaryViewModel(), { binding })
-	// 	binding.startInactivityTimer()
-	// 	diary.emit("logout")
-	// 	assert.strictEqual(binding.interval._idleTimeout, -1)
-	// 	assert.strictEqual(binding.interval._destroyed, true)
-	// 	assert.strictEqual(binding.interval._onTimeout, null)
-	// })
-
-	// it("windowClick", () => {
-	// 	const diary = new Diary()
-	// 	const router = new Router([])
-	//  router.view = new Observable()
-	// 	const binding = new DiaryViewBinding({ diary, router })
-	// 	rootBinding.run(DiaryViewModel(), { binding })
-	// 	binding.startInactivityTimer()
-	// 	let timeoutId = binding.interval[Object.getOwnPropertySymbols(binding.interval)[2]]
-	// 	document.body.dispatchEvent(new window.Event("click", { bubbles: true }))
-	// 	assert.notStrictEqual(binding.interval[Object.getOwnPropertySymbols(binding.interval)[2]], timeoutId)
-	// 	assert.strictEqual(binding.interval._idleTimeout, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.strictEqual(binding.interval._repeat, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.strictEqual(binding.interval._destroyed, false)
-	// })
-
-	// it("windowInput", () => {
-	// 	const diary = new Diary()
-	// 	const router = new Router([])
-	//  router.view = new Observable()
-	// 	const binding = new DiaryViewBinding({ diary, router })
-	// 	rootBinding.run(DiaryViewModel(), { binding })
-	// 	binding.startInactivityTimer()
-	// 	let timeoutId = binding.interval[Object.getOwnPropertySymbols(binding.interval)[2]]
-	// 	document.body.dispatchEvent(new window.Event("input", { bubbles: true }))
-	// 	assert.notStrictEqual(binding.interval[Object.getOwnPropertySymbols(binding.interval)[2]], timeoutId)
-	// 	assert.strictEqual(binding.interval._idleTimeout, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.strictEqual(binding.interval._repeat, DiaryViewBinding.INACTIVITY_TIMER_DELAY)
-	// 	assert.strictEqual(binding.interval._destroyed, false)
-	// })
-
-	it("menuButton", () => {
-		const diary = new Diary()
-		const router = new Router([])
-		router.view = new Observable()
-		const binding = new DiaryViewBinding({ diary, router })
-		rootBinding.run(DiaryViewModel(), { binding })
-		let emitted = false
-		router.view.listen("openSettings", () => {
-			emitted = true
+		let emitted = 0
+		diary.listen("logout", () => {
+			emitted++
 		})
-		binding.identifier.menu.dispatchEvent(new window.Event("click"))
-		assert.ok(emitted)
-		window.clearInterval(binding.interval)
-	})
-
-	it("addNoteButton", () => {
-		const diary = new Diary()
 		const router = new Router([])
-		router.view = new Observable()
-		const binding = new DiaryViewBinding({ diary, router })
-		rootBinding.run(DiaryViewModel(), { binding })
-		let emitted = false
-		diary.editor.listen("open", () => {
-			emitted = true
+	 	router._view = new Observable()
+		const binding = new DiaryViewBinding({ diary, router, inactivity_timer_delay: 1 })
+		test.context.rootBinding.run(DiaryViewModel(), { binding })
+		test.is(binding.interval, 1)
+		setTimeout(() => {
+			test.is(emitted, 1)
+			resolve()
 		})
-		binding.identifier.addNote.dispatchEvent(new window.Event("click"))
-		assert.ok(emitted)
-		window.clearInterval(binding.interval)
 	})
+})
 
+test("DiaryViewBinding stopInactivityTimer", test => {
+	return new Promise(resolve => {
+		const diary = new Diary()
+		let emitted = 0
+		diary.listen("logout", () => {
+			emitted++
+		})
+		const router = new Router([])
+	 	router._view = new Observable()
+		const binding = new DiaryViewBinding({ diary, router, inactivity_timer_delay: 1 })
+		test.context.rootBinding.run(DiaryViewModel(), { binding })
+		test.is(binding.interval, 1)
+		binding.stopInactivityTimer()
+		setTimeout(() => {
+			test.is(emitted, 0)
+			resolve()
+		})
+	})
+})
+
+test("DiaryViewBinding restartInactivityTimer", (test) => {
+	const diary = new Diary()
+	const router = new Router([])
+ 	router._view = new Observable()
+	const binding = new DiaryViewBinding({ diary, router })
+	test.context.rootBinding.run(DiaryViewModel(), { binding })
+	test.is(binding.interval, 1)
+	binding.restartInactivityTimer()
+	test.is(binding.interval, 2)
+})
+
+test("DiaryViewBinding windowClick", (test) => {
+	const diary = new Diary()
+	const router = new Router([])
+ 	router._view = new Observable()
+	const binding = new DiaryViewBinding({ diary, router })
+	test.context.rootBinding.run(DiaryViewModel(), { binding })
+	test.is(binding.interval, 1)
+	test.context.document.body.dispatchEvent(new test.context.window.Event("click", { bubbles: true }))
+	test.is(binding.interval, 2)
+})
+
+test("DiaryViewBinding windowInput", (test) => {
+	const diary = new Diary()
+	const router = new Router([])
+ 	router._view = new Observable()
+	const binding = new DiaryViewBinding({ diary, router })
+	test.context.rootBinding.run(DiaryViewModel(), { binding })
+	test.is(binding.interval, 1)
+	test.context.document.body.dispatchEvent(new test.context.window.Event("input", { bubbles: true }))
+	test.is(binding.interval, 2)
+})
+
+test("DiaryViewBinding menuButton", (test) => {
+	const diary = new Diary()
+	const router = new Router([])
+	router._view = new Observable()
+	const binding = new DiaryViewBinding({ diary, router })
+	test.context.rootBinding.run(DiaryViewModel(), { binding })
+	let emitted = false
+	router._view.listen("openSettings", () => {
+		emitted = true
+	})
+	binding.identifier.menu.dispatchEvent(new test.context.window.Event("click"))
+	test.true(emitted)
+	test.context.window.clearInterval(binding.interval)
+})
+
+test("DiaryViewBinding addNoteButton", (test) => {
+	const diary = new Diary()
+	const router = new Router([])
+	router._view = new Observable()
+	const binding = new DiaryViewBinding({ diary, router })
+	test.context.rootBinding.run(DiaryViewModel(), { binding })
+	let emitted = false
+	diary.editor.listen("open", () => {
+		emitted = true
+	})
+	binding.identifier.addNote.dispatchEvent(new test.context.window.Event("click"))
+	test.true(emitted)
+	test.context.window.clearInterval(binding.interval)
 })

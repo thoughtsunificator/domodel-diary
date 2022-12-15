@@ -4,11 +4,12 @@
 	"main": "index.js",
 	"description": "Universal password protected diary application",
 	"scripts": {
-		"test": "mocha test/**",
+		"test": "ava test/**",
 		"generate-docs": "jsdoc --configure .jsdoc.json --verbose",
 		"lint": "eslint src/**/*.js"
 	},
 	"devDependencies": {
+		"ava": "^5.1.0",
 		"docdash": "^1.2.0",
 		"eslint": "^7.28.0",
 		"jsdoc": "^3.6.7",

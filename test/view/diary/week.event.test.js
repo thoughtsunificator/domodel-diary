@@ -1,12 +1,15 @@
 import test from "ava"
 import { JSDOM } from "jsdom"
-import { Core, Binding } from "domodel"
+import { Core, Binding, EventListener } from "domodel"
 
 import WeekModel from "../../../src/model/view/diary/week.js"
 
 import WeekBinding from "../../../src/model/view/diary/week.binding.js"
 
+import WeekEventListener from "../../../src/model/view/diary/week.event.js"
+
 import Diary from "../../../src/object/diary.js"
+
 
 const RootModel = { tagName: "div" }
 
@@ -18,14 +21,11 @@ test.beforeEach((test) => {
 	Core.run(RootModel, { parentNode: test.context.document.body, binding: test.context.rootBinding })
 })
 
-test("WeekBinding instance", (test) => {
-	test.true(WeekBinding.prototype instanceof Binding)
+test("WeekEventListener instance", (test) => {
+	test.true(WeekEventListener.prototype instanceof EventListener)
 })
 
-test("WeekBinding onCreated", (test) => {
-	// const diary = new Diary()
-	// const binding = new WeekBinding({ diary })
-	// test.context.rootBinding.run(WeekModel, { binding })
+test("WeekEventListener remove", (test) => {
 	test.pass()
 })
 

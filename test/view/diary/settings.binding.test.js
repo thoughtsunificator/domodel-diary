@@ -1,4 +1,4 @@
-import assert from "assert"
+import test from "ava"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 import { PopupBinding } from "@domodel/popup"
@@ -9,48 +9,35 @@ import SettingsBinding from "../../../src/model/view/diary/settings.binding.js"
 
 import Diary from "../../../src/object/diary.js"
 
-const virtualDOM = new JSDOM()
-const window = virtualDOM.window
-const { document } = window
-
 const RootModel = { tagName: "div" }
-let rootBinding
 
-describe("SettingsBinding", () => {
+test.beforeEach((test) => {
+	test.context.virtualDOM = new JSDOM()
+	test.context.window = test.context.virtualDOM.window
+	test.context.document = test.context.window.document
+	test.context.rootBinding = new Binding()
+	Core.run(RootModel, { parentNode: test.context.document.body, binding: test.context.rootBinding })
+})
 
-	beforeEach(() => {
-		rootBinding = new Binding()
-		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	})
+test("SettingsBinding instance", (test) => {
+	test.true(SettingsBinding.prototype instanceof Binding)
+})
 
-	afterEach(() => {
-		rootBinding.remove()
-	})
+test("SettingsBinding onCreated", (test) => {
+	// const diary = new Diary()
+	// const binding = new SettingsBinding({ diary })
+	// test.context.rootBinding.run(SettingsModel, { binding })
+	test.pass()
+})
 
-	it("instance", () => {
-		assert.ok(SettingsBinding.prototype instanceof Binding)
-	})
+test("SettingsBinding export button click", (test) => {
+	test.pass()
+})
 
-	it("onCreated", () => {
-		// const diary = new Diary()
-		// const binding = new SettingsBinding({ diary })
-		// rootBinding.run(SettingsModel, { binding })
-	})
+test("SettingsBinding import button click", (test) => {
+	test.pass()
+})
 
-	it("settingsPopup", () => {
-
-	})
-
-	it("exportButton", () => {
-
-	})
-
-	it("importButton", () => {
-
-	})
-
-	it("logoutButton", () => {
-
-	})
-
+test("SettingsBinding logout button click", (test) => {
+	test.pass()
 })

@@ -1,18 +1,16 @@
-import assert from "assert"
+import test from "ava"
 import { Observable } from "domodel"
 
 import Week from "../src/object/week.js"
 
-describe("week", () => {
 
-	it("instance", () => {
-		const week = new Week(2)
-		assert.ok(Week.prototype instanceof Observable)
-		assert.strictEqual(week.number, 2)
-		assert.throws(() => {
-			week.number = ""
-			week.days = ""
-		})
+test("Week instance", (test) => {
+	const week = new Week(2)
+	test.true(Week.prototype instanceof Observable)
+	test.is(week.number, 2)
+	test.throws(() => {
+		week.number = ""
+		week.days = ""
 	})
-
 })
+

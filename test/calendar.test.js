@@ -1,22 +1,19 @@
-import assert from "assert"
+import test from "ava"
 import { Observable } from "domodel"
 
 import Calendar from "../src/object/calendar.js"
 
-describe("calendar", () => {
-
-	it("instance", () => {
-		const date = new Date()
-		const calendar = new Calendar(date)
-		assert.ok(Calendar.prototype instanceof Observable)
-		assert.strictEqual(calendar.date, date)
-		assert.strictEqual(calendar.weeks, null)
-		assert.strictEqual(calendar.day, null)
-		assert.doesNotThrow(function() {
-			calendar.weeks = []
-			calendar.day = ""
-			calendar.date = new Date()
-		})
+test("Calendar instance", (test) => {
+	const date = new Date()
+	const calendar = new Calendar(date)
+	test.true(Calendar.prototype instanceof Observable)
+	test.is(calendar.date, date)
+	test.is(calendar.weeks, null)
+	test.is(calendar.day, null)
+	test.notThrows(function() {
+		calendar.weeks = []
+		calendar.day = ""
+		calendar.date = new Date()
 	})
-
 })
+
