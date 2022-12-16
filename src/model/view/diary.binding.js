@@ -1,5 +1,5 @@
 import { Binding } from "domodel"
-import { PopupModel, PopupBinding, Popup } from "@domodel/popup"
+import { PopupBinding, Popup } from "@domodel/popup"
 
 import SettingsModel from "./diary/settings.js"
 
@@ -57,7 +57,7 @@ class DiaryViewBinding extends Binding {
 
 		this.startInactivityTimer()
 
-		this.run(PopupModel(SettingsModel), { binding: new SettingsBinding({ popup: this.popup  }) })
+		this.run(SettingsModel, { binding: new SettingsBinding({ popup: this.popup  }) })
 	}
 
 	startInactivityTimer() {

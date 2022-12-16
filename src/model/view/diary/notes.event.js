@@ -46,7 +46,6 @@ class NotesEventListener extends EventListener {
 		notes.remove(note)
 		note.emit("remove")
 		diary.calendar.day.emit("updateIndicator", diary.notes.notesList.length >= 1)
-		console.log("remove")
 		this.render()
 	}
 
@@ -56,7 +55,7 @@ class NotesEventListener extends EventListener {
 	clear() {
 		const { diary } = this.properties
 		const { notes } = diary
-		notes.notesList.forEach(note => diary.notes.emit("remove", note))
+		notes.notesList.slice().forEach(note => diary.notes.emit("remove", note))
 	}
 
 }
