@@ -11,7 +11,6 @@ class EditorEventListener extends EventListener {
 	 */
 	open(note) {
 		const { diary } = this.properties
-		const { editor } = diary
 		if(diary.editor.opened) {
 			return
 		}
