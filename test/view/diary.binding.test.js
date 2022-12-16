@@ -55,6 +55,21 @@ test("DiaryViewBinding onCreated", (test) => {
 	test.context.window.clearInterval(binding.interval)
 })
 
+test("DiaryViewBinding logout", test => {
+	const diary = new Diary()
+	let emitted = 0
+	diary.listen("logout", () => {
+		emitted++
+	})
+	const router = new Router([])
+	router._view = new Observable()
+	const binding = new DiaryViewBinding({ diary, router, inactivity_timer_delay: 20 })
+	diary.emit("logout")
+	test.context.rootBinding.run(DiaryViewModel(), { binding })
+	test.is(binding.interval, 1)
+	test.is(emitted, 1)
+})
+
 test("DiaryViewBinding startInactivityTimer", test => {
 	return new Promise(resolve => {
 		const diary = new Diary()
