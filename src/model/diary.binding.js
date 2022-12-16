@@ -20,19 +20,14 @@ class DiaryBinding extends Binding {
 	 */
 	constructor(properties) {
 		super(properties, new DiaryEventListener(properties.diary))
-	}
-
-	onCreated() {
-
-		const { diary } = this.properties
-
 		this.router = new Router([
 			new Route("/", AuthViewModel, AuthViewBinding),
 			new Route("/diary", DiaryViewModel, DiaryViewBinding)
 		], Router.TYPE.VIRTUAL)
+	}
 
+	onCreated() {
 		this.run(RouterModel, { binding: new RouterBinding({ router: this.router }) })
-
 	}
 
 	/**

@@ -27,16 +27,15 @@ class DiaryViewBinding extends Binding {
 	 */
 	constructor(properties) {
 		super(properties, new DiaryViewEventListener(properties.router.view))
+		this.popup = new Popup()
+		this.textFileURL = null
+		this.interval = null
+		this.inactivity_timer_delay = this.properties.inactivity_timer_delay || DiaryViewBinding.INACTIVITY_TIMER_DELAY
 	}
 
 	onCreated() {
 
 		const { diary, router } = this.properties
-
-		this.popup = new Popup()
-		this.textFileURL = null
-		this.interval = null
-		this.inactivity_timer_delay = this.properties.inactivity_timer_delay || DiaryViewBinding.INACTIVITY_TIMER_DELAY
 
 		this.listen(diary, "logout", () => {
 			this.stopInactivityTimer()

@@ -18,13 +18,12 @@ class NotesBinding extends Binding {
 	 */
 	constructor(properties) {
 		super(properties, new NotesEventListener(properties.diary.notes))
+		this.paginator = new Paginator(3)
 	}
 
 	onCreated() {
 
 		const { diary } = this.properties
-
-		this.paginator = new Paginator(3)
 
 		this.listen(this.paginator, "itemsChanged", () => {
 			if(this.paginator.items.length === 0) {
