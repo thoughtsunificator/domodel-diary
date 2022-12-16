@@ -24,5 +24,17 @@ test("CalendarBinding instance", (test) => {
 })
 
 test("CalendarBinding onCreated", (test) => {
-	test.pass()
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const date = new Date()
+		diary.calendar.listen("setDate", (data) => {
+			test.is(data.date.getDate(), date.getDate())
+			test.is(data.date.getFullYear(), date.getFullYear())
+			test.is(data.date.getMonth(), date.getMonth())
+			test.is(data.date.getDay(), date.getDay())
+			resolve()
+		})
+		const binding = new CalendarBinding({ diary })
+		test.context.rootBinding.run(CalendarModel, { binding })
+	})
 })

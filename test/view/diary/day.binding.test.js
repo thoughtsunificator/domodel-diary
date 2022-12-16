@@ -25,11 +25,20 @@ test("DayBinding instance", (test) => {
 })
 
 test("DayBinding onCreated", (test) => {
-	// const diary = new Diary()
-	// const day = new Day(new Date())
-	// const binding = new DayBinding({ diary, day })
-	// test.context.rootBinding.run(DayModel(day), { binding })
-	test.pass()
+	const diary = new Diary()
+	const day = new Day(new Date())
+	const binding = new DayBinding({ diary, day })
+	test.context.rootBinding.run(DayModel(day), { binding })
+	test.false(binding.root.classList.contains("content"))
+})
+
+test("DayBinding onCreated with notes", (test) => {
+	const diary = new Diary()
+	const day = new Day(new Date())
+	diary.notes.add(new Note("test"), new Date())
+	const binding = new DayBinding({ diary, day })
+	test.context.rootBinding.run(DayModel(day), { binding })
+	test.true(binding.root.classList.contains("content"))
 })
 
 test("DayBinding click", test => {

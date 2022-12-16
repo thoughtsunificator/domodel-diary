@@ -37,34 +37,143 @@ test("CalendarEventListener setDate", (test) => {
 })
 
 
-test("CalendarEventListener setMonth", (test) => {
-	test.pass()
-})
-
 test("CalendarEventListener setYear", (test) => {
-	test.pass()
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const binding = new CalendarBinding({ diary })
+		test.context.rootBinding.run(CalendarModel, { binding })
+		const date = diary.calendar.date
+		const year = date.getFullYear()
+		let nextYear = year + 1
+		diary.calendar.listen("setDate", (data) => {
+			test.is(data.date.getFullYear(), nextYear)
+			resolve()
+		})
+		diary.calendar.emit("setYear", nextYear)
+	})
 })
 
 test("CalendarEventListener imported", (test) => {
-	test.pass()
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const binding = new CalendarBinding({ diary })
+		test.context.rootBinding.run(CalendarModel, { binding })
+		const date = diary.calendar.date
+		diary.calendar.listen("setDate", (data) => {
+			test.is(data.date.getDate(), date.getDate())
+			test.is(data.date.getFullYear(), date.getFullYear())
+			test.is(data.date.getMonth(), date.getMonth())
+			test.is(data.date.getDay(), date.getDay())
+			resolve()
+		})
+		diary.emit("imported")
+	})
 })
 
 test("CalendarEventListener todayButton", (test) => {
-	test.pass()
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const binding = new CalendarBinding({ diary })
+		test.context.rootBinding.run(CalendarModel, { binding })
+		const date = diary.calendar.date
+		diary.calendar.listen("setDate", (data) => {
+			test.is(data.date.getDate(), date.getDate())
+			test.is(data.date.getFullYear(), date.getFullYear())
+			test.is(data.date.getMonth(), date.getMonth())
+			test.is(data.date.getDay(), date.getDay())
+			resolve()
+		})
+		binding.identifier.today.dispatchEvent(new test.context.window.Event('click'))
+	})
 })
 
-test("CalendarEventListenermonthButton", (test) => {
-	test.pass()
+test("CalendarEventListener monthButton", (test) => {
+	return Promise.all([
+		new Promise(resolve => {
+			const diary = new Diary()
+			const binding = new CalendarBinding({ diary })
+			test.context.rootBinding.run(CalendarModel, { binding })
+			const date = diary.calendar.date
+			diary.calendar.listen("setDate", (data) => {
+				test.true(data.rebuild)
+				test.is(data.date.getDate(), date.getDate())
+				test.is(data.date.getFullYear(), date.getFullYear())
+				test.is(data.date.getMonth(), 2)
+				test.is(data.date.getDay(), date.getDay())
+				resolve()
+			})
+			binding.identifier.month.value = 3
+			binding.identifier.month.dispatchEvent(new test.context.window.Event('change'))
+		}),
+		new Promise(resolve => {
+			const diary = new Diary()
+			const binding = new CalendarBinding({ diary })
+			test.context.rootBinding.run(CalendarModel, { binding })
+			const date = diary.calendar.date
+			diary.calendar.listen("setDate", (data) => {
+				test.true(data.rebuild)
+				test.is(data.date.getDate(), date.getDate())
+				test.is(data.date.getFullYear(), date.getFullYear())
+				test.is(data.date.getMonth(), 4)
+				test.is(data.date.getDay(), date.getDay())
+				resolve()
+			})
+			binding.identifier.month.value = 5
+			binding.identifier.month.dispatchEvent(new test.context.window.Event('change'))
+		})
+	])
 })
 
 test("CalendarEventListener previousMonthButton", (test) => {
-	test.pass()
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const binding = new CalendarBinding({ diary })
+		test.context.rootBinding.run(CalendarModel, { binding })
+		const date = binding.getPreviousMonthDate()
+		diary.calendar.listen("setDate", (data) => {
+			test.true(data.rebuild)
+			test.is(data.date.getDate(), date.getDate())
+			test.is(data.date.getFullYear(), date.getFullYear())
+			test.is(data.date.getMonth(), date.getMonth())
+			test.is(data.date.getDay(), date.getDay())
+			resolve()
+		})
+		binding.identifier.previousMonth.dispatchEvent(new test.context.window.Event('click'))
+	})
 })
 
 test("CalendarEventListener nextMonthButton", (test) => {
-	test.pass()
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const binding = new CalendarBinding({ diary })
+		test.context.rootBinding.run(CalendarModel, { binding })
+		const date = binding.getNextMonthDate()
+		diary.calendar.listen("setDate", (data) => {
+			test.true(data.rebuild)
+			test.is(data.date.getDate(), date.getDate())
+			test.is(data.date.getFullYear(), date.getFullYear())
+			test.is(data.date.getMonth(), date.getMonth())
+			test.is(data.date.getDay(), date.getDay())
+			resolve()
+		})
+		binding.identifier.nextMonth.dispatchEvent(new test.context.window.Event('click'))
+	})
 })
 
-test("CalendarEventListener yearButton", (test) => {
-	test.pass()
+test("CalendarEventListener year input", (test) => {
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const binding = new CalendarBinding({ diary })
+		test.context.rootBinding.run(CalendarModel, { binding })
+		const date = diary.calendar.date
+		const nextYear = date.getFullYear() + 1
+		diary.calendar.listen("setDate", (data) => {
+			test.is(data.date.getDate(), date.getDate())
+			test.is(data.date.getFullYear(), nextYear)
+			test.is(data.date.getMonth(), date.getMonth())
+			resolve()
+		})
+		binding.identifier.year.value = nextYear
+		binding.identifier.year.dispatchEvent(new test.context.window.Event('input'))
+	})
 })

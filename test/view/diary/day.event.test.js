@@ -27,17 +27,21 @@ test("DayEventListener instance", (test) => {
 })
 
 test("DayEventListener select", (test) => {
-	test.pass()
+	const diary = new Diary()
+	const day = new Day(new Date())
+	const binding = new DayBinding({ diary, day })
+	test.context.rootBinding.run(DayModel(day), { binding })
+	day.emit("select")
+	test.true(binding.root.classList.contains("active"))
 })
 
 test("DayEventListener unselect", (test) => {
-	test.pass()
-})
-
-test("DayEventListener notesAdded", (test) => {
-	test.pass()
-})
-
-test("DayEventListener notesRemoved", (test) => {
-	test.pass()
+	const diary = new Diary()
+	const day = new Day(new Date())
+	const binding = new DayBinding({ diary, day })
+	test.context.rootBinding.run(DayModel(day), { binding })
+	binding.root.classList.add("active")
+	test.true(binding.root.classList.contains("active"))
+	day.emit("unselect")
+	test.false(binding.root.classList.contains("active"))
 })
