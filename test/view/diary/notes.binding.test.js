@@ -84,7 +84,7 @@ test("NotesBinding itemsChanged", (test) => {
 		new Promise(resolve => {
 			const diary = new Diary()
 			const binding = new NotesBinding({ diary })
-			binding.paginator.listen("itemsChanged", data => {
+			binding.paginator.listen("itemsChanged", () => {
 				test.is(binding.identifier.list.style.display, "none")
 				test.is(binding.identifier.placeholder.style.display, "")
 				resolve()
@@ -96,13 +96,28 @@ test("NotesBinding itemsChanged", (test) => {
 			const binding = new NotesBinding({ diary })
 			test.context.rootBinding.run(NotesModel, { binding })
 			diary.notes.add("xzczxcxcxzc", new Date())
-			binding.paginator.listen("itemsChanged", data => {
+			binding.paginator.listen("itemsChanged", () => {
 				test.is(binding.identifier.list.style.display, "")
 				test.is(binding.identifier.placeholder.style.display, "none")
 				resolve()
 			})
 			binding.render()
 		})		
+	])
+})
+
+test("NotesBinding setDate", (test) => {
+	return Promise.all([
+		new Promise(resolve => {
+			const diary = new Diary()
+			const binding = new NotesBinding({ diary })
+			test.context.rootBinding.run(NotesModel, { binding })
+			binding.paginator.listen("itemsChanged", () => {
+				test.pass()
+				resolve()
+			})
+			diary.calendar.emit("setDate")
+		}),
 	])
 })
 
