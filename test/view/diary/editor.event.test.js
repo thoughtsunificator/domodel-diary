@@ -9,6 +9,7 @@ import EditorBinding from "../../../src/model/view/diary/editor.binding.js"
 import EditorEventListener from "../../../src/model/view/diary/editor.event.js"
 
 import Diary from "../../../src/object/diary.js"
+import Note from "../../../src/object/note.js"
 
 
 const RootModel = { tagName: "div" }
@@ -25,58 +26,31 @@ test("EditorEventListener instance", (test) => {
 	test.true(EditorEventListener.prototype instanceof EventListener)
 })
 
-test("EditorEventListener onCreated", (test) => {
-	// const diary = new Diary()
-	// const binding = new EditorBinding({ diary })
-	// test.context.rootBinding.run(EditorModel, { binding })
-	test.pass()
+test("EditorBinding open", (test) => {
+	const diary = new Diary()
+	const binding = new EditorBinding({ diary })
+	test.context.rootBinding.run(EditorModel, { binding })
+	const note = new Note("tdsasdadsadsaest", new Date())
+	diary.editor.emit("open", note)
+	test.true(diary.editor.opened)
+	test.is(diary.editor.note, note)
+	test.is(binding.identifier.content.value, note.content)
+	test.is(binding.root.style.display, "grid")
+	diary.editor.emit("open", new Note("cxzcxzcxz", new Date()))
+	test.is(diary.editor.note, note)
+	test.is(binding.identifier.content.value, note.content)
 })
 
-test("EditorEventListener editorOpen", (test) => {
-	// const diary = new Diary()
-	// const binding = new EditorBinding({ diary })
-	// test.context.rootBinding.run(EditorModel, { binding })
-	test.pass()
-})
-
-test("EditorEventListener editorClose", (test) => {
-	// const diary = new Diary()
-	// const binding = new EditorBinding({ diary })
-	// test.context.rootBinding.run(EditorModel, { binding })
-	test.pass()
-})
-
-test("EditorEventListener closeButon", (test) => {
-	// const diary = new Diary()
-	// const binding = new EditorBinding({ diary })
-	// test.context.rootBinding.run(EditorModel, { binding })
-	// diary.editor.listen("close", data => {
-
-	// })
-	// binding.identifier.close.dispatchEvent(new test.context.window.Event('click'))
-	// test.is(binding.identifier.content.value, "")
-	test.pass()
-})
-
-test("EditorEventListener saveButton", (test) => {
-	// const diary = new Diary()
-	// const binding = new EditorBinding({ diary })
-	// test.context.rootBinding.run(EditorModel, { binding })
-	// diary.editor.listen("close", data => {
-
-	// })
-	// binding.identifier.save.dispatchEvent(new test.context.window.Event('click'))
-	test.pass()
-})
-
-test("EditorEventListener windowKeyup", (test) => {
-	// const diary = new Diary()
-	// const binding = new EditorBinding({ diary })
-	// binding.opened = true
-	// test.context.rootBinding.run(EditorModel, { binding })
-	// diary.editor.listen("close", data => {
-
-	// })
-	// test.context.document.body.dispatchEvent(new test.context.window.Event('keyup', { keyCode: 27, bubbles: true }))
-	test.pass()
+test("EditorBinding close", (test) => {
+	const diary = new Diary()
+	const binding = new EditorBinding({ diary })
+	const note = new Note("tdsasdadsadsaest", new Date())
+	test.context.rootBinding.run(EditorModel, { binding })
+	binding.identifier.content.value = "yucgxzyucxzc"
+	diary.editor.note = note
+	diary.editor.emit("close", note)
+	test.false(diary.editor.opened)
+	test.is(diary.editor.note, null)
+	test.is(binding.identifier.content.value, "yucgxzyucxzc")
+	test.is(binding.root.style.display, "none")
 })

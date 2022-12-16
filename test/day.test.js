@@ -11,5 +11,8 @@ test("Day instance", (test) => {
 	test.throws(function() {
 		day.date = new Date()
 	})
+	const day2 = new Day(date, true)
+	test.is(day2.date, date)
+	test.is(day2.grayed, true)
 })
 

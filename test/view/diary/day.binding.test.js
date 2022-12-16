@@ -32,6 +32,15 @@ test("DayBinding onCreated", (test) => {
 	test.false(binding.root.classList.contains("content"))
 })
 
+test("DayBinding onCreated grayed", (test) => {
+	const diary = new Diary()
+	const day = new Day(new Date(), true)
+	const binding = new DayBinding({ diary, day })
+	test.context.rootBinding.run(DayModel(day), { binding })
+	test.false(binding.root.classList.contains("content"))
+	test.true(binding.root.classList.contains("grayed"))
+})
+
 test("DayBinding onCreated with notes", (test) => {
 	const diary = new Diary()
 	const day = new Day(new Date())
