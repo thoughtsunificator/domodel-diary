@@ -141,7 +141,6 @@ test("NotesEventListener clear", (test) => {
 			remove++
 		})
 		binding.paginator.listen("itemsSet", data => {
-			console.log(index)
 			if(index == 0) {
 				test.is(data.length, 1)
 				test.is(remove, 1)

@@ -34,3 +34,35 @@ test("NoteBinding onCreated", (test) => {
 	test.context.rootBinding.run(NoteModel({ note }), { binding })
 	test.pass()
 })
+
+test("NoteBinding edit button", (test) => {
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const day = new Day(new Date())
+		const page = new Page()
+		const note = new Note("test", new Date())
+		const binding = new NoteBinding({ note, diary, day, page })
+		test.context.rootBinding.run(NoteModel({ note }), { binding })
+		diary.editor.listen("open", data => {
+			test.is(data, note)
+			resolve()
+		})
+		binding.identifier.edit.dispatchEvent(new test.context.window.Event('click'))
+	})
+})
+
+test("NoteBinding remove button", (test) => {
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const day = new Day(new Date())
+		const page = new Page()
+		const note = new Note("test", new Date())
+		const binding = new NoteBinding({ note, diary, day, page })
+		test.context.rootBinding.run(NoteModel({ note }), { binding })
+		diary.notes.listen("remove", data => {
+			test.is(data, note)
+			resolve()
+		})
+		binding.identifier.remove.dispatchEvent(new test.context.window.Event('click'))
+	})
+})

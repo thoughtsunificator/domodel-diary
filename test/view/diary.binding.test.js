@@ -44,7 +44,7 @@ test("DiaryViewBinding onCreated", (test) => {
 	test.deepEqual(binding._children[0].model, CalendarModel)
 	test.deepEqual(binding._children[1].model, NotesModel)
 	test.deepEqual(binding._children[2].model, EditorModel)
-	test.deepEqual(binding._children[3].model, PopupModel(SettingsModel))
+	test.deepEqual(binding._children[3].model, SettingsModel)
 	test.deepEqual(binding._children[0].root, binding.identifier.content)
 	test.deepEqual(binding._children[1].root, binding.identifier.content)
 	test.true(binding._children[0] instanceof CalendarBinding)

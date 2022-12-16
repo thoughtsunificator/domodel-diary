@@ -27,24 +27,10 @@ test("DiaryViewEventListener instance", (test) => {
 })
 
 test("DiaryViewEventListener export", (test) => {
-	// const diary = new Diary()
-	// diary.password = "test"
-	// const router = new Router([])
-	// router._view = new Observable()
-	// const binding = new DiaryViewBinding({ diary, router })
-	// test.context.rootBinding.run(DiaryViewModel(), { binding })
-	// router.view.emit("export")
 	test.pass()
 })
 
 test("DiaryViewEventListener import", (test) => {
-	// const diary = new Diary()
-	// diary.password = "test"
-	// const router = new Router([])
-	// router._view = new Observable()
-	// const binding = new DiaryViewBinding({ diary, router })
-	// test.context.rootBinding.run(DiaryViewModel(), { binding })
-	// router.view.emit("import")
 	test.pass()
 })
 
