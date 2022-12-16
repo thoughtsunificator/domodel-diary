@@ -30,7 +30,7 @@ test("NotesEventListener instance", (test) => {
 test("NotesEventListener add", (test) => {
 	return new Promise(resolve => {
 		const diary = new Diary()
-		diary.calendar.day = new Day(new Date())
+		diary.calendar.day = new Day(diary.calendar.date)
 		let updateIndicator = false
 		diary.calendar.day.listen("updateIndicator", data => {
 			updateIndicator = data
@@ -120,18 +120,43 @@ test("NotesEventListener remove", (test) => {
 	])
 })
 
-// test("NotesEventListener clear", (test) => {
-// 	return new Promise(resolve => {
-// 		const diary = new Diary()
-// 		diary.calendar.day = new Day(new Date())
-// 		const binding = new NotesBinding({ diary })
-// 		test.context.rootBinding.run(NotesModel, { binding })
-// 		binding.paginator.listen("itemsSet", data => {
-// 			test.deepEqual(data[0].properties.note.content, "czxczdsadsa")
-// 			test.deepEqual(data[0].properties.note.date, diary.calendar.date)
-// 			resolve()
-// 		})
-// 		diary.notes.emit("add", { form: { content: "czxczdsadsa" } })
-// 		test.deepEqual(diary.notes.notesList, [ new Note("czxczdsadsa", diary.calendar.date) ])
-// 	})
-// })
+test("NotesEventListener clear", (test) => {
+	return new Promise(resolve => {
+		const diary = new Diary()
+		diary.calendar.day = new Day(new Date())
+		const binding = new NotesBinding({ diary })
+		test.context.rootBinding.run(NotesModel, { binding })
+		const note = diary.notes.add("zxczxczxcsa", diary.calendar.date)
+		const note2 = diary.notes.add("cxzcxzczx", diary.calendar.date)
+		let indicatorUpdated
+		diary.calendar.day.listen("updateIndicator", data => {
+			indicatorUpdated = data
+		})
+		let remove = 0
+		let index = 0
+		note.listen("remove", () => {
+			remove++
+		})
+		note2.listen("remove", () => {
+			remove++
+		})
+		binding.paginator.listen("itemsSet", data => {
+			console.log(index)
+			if(index == 0) {
+				test.is(data.length, 1)
+				test.is(remove, 1)
+				test.deepEqual(indicatorUpdated, true)
+				test.deepEqual(diary.notes.notesList, [ note2])
+			} else if(index == 1) {
+				test.is(data.length, 0)
+				test.is(remove, 2)
+				test.deepEqual(indicatorUpdated, false)
+				test.deepEqual(diary.notes.notesList, [  ])
+				resolve()
+			}
+			index++
+		})
+		test.deepEqual(diary.notes.notesList, [ note, note2 ])
+		diary.notes.emit("clear")
+	})
+})
