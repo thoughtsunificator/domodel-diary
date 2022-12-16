@@ -1,4 +1,6 @@
-export default {
+import { PopupModel } from "@domodel/popup"
+
+export default PopupModel({
 	tagName: "div",
 	id: "settings",
 	style: "display: contents",
@@ -19,4 +21,4 @@ export default {
 			identifier: "logout"
 		}
 	]
-}
+})

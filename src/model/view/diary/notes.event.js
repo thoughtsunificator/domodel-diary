@@ -15,7 +15,7 @@ class NotesEventListener extends EventListener {
 		const { diary } = this.properties
 		const { calendar, notes } = diary
 		const { form } = data
-		const note = notes.add(form.content, calendar.day.date)
+		notes.add(form.content, calendar.day.date)
 		diary.calendar.day.emit("updateIndicator", true)
 		this.render()
 	}
@@ -45,7 +45,7 @@ class NotesEventListener extends EventListener {
 		const { notes } = diary
 		notes.remove(note)
 		note.emit("remove")
-		diary.calendar.day.emit("updateIndicator", diary.notes.length >= 1)
+		diary.calendar.day.emit("updateIndicator", diary.notes.notesList.length >= 1)
 		this.render()
 	}
 
@@ -55,7 +55,7 @@ class NotesEventListener extends EventListener {
 	clear() {
 		const { diary } = this.properties
 		const { notes } = diary
-		notes.notesList.forEach(note => diary.notes.emit("remove", note))
+		notes.notesList.slice().forEach(note => diary.notes.emit("remove", note))
 	}
 
 }

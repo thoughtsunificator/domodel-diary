@@ -71,29 +71,6 @@ class CalendarEventListener extends EventListener {
 	}
 
 	/**
-	 * @event CalendarEventListener#setMonth
-	 * @property {number} month
-	 */
-	setMonth(month) {
-		const { diary } = this.properties
-		const { calendar } = diary
-
-		const date = new Date(calendar.date)
-		if(month > this.identifier.month.options.length - 1) {
-			month = 0
-			this.identifier.month.selectedIndex = month
-			date.setYear(parseInt(this.identifier.year.value) + 1)
-		} else if(month < 0) {
-			month = this.identifier.month.options.length - 1
-			this.identifier.month.selectedIndex = month
-			date.setYear(this.identifier.year.value - 1)
-		}
-		date.setDate(1)
-		date.setMonth(month)
-		calendar.emit("setDate", { date })
-	}
-
-	/**
 	 * @event CalendarEventListener#setYear
 	 * @property {number} year
 	 */

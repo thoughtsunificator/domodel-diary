@@ -1,4 +1,4 @@
-import assert from "assert"
+import test from "ava"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 import { ItemBinding, Page } from "@domodel/paginator"
@@ -11,51 +11,58 @@ import Diary from "../../../src/object/diary.js"
 import Day from "../../../src/object/day.js"
 import Note from "../../../src/object/note.js"
 
-const virtualDOM = new JSDOM()
-const window = virtualDOM.window
-const { document } = window
-
 const RootModel = { tagName: "div" }
-let rootBinding
 
-describe("NoteBinding", () => {
+test.beforeEach((test) => {
+	test.context.virtualDOM = new JSDOM()
+	test.context.window = test.context.virtualDOM.window
+	test.context.document = test.context.window.document
+	test.context.rootBinding = new Binding()
+	Core.run(RootModel, { parentNode: test.context.document.body, binding: test.context.rootBinding })
+})
 
-	beforeEach(() => {
-		rootBinding = new Binding()
-		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	})
+test("NoteBinding instance", (test) => {
+	test.true(NoteBinding.prototype instanceof Binding)
+})
 
-	afterEach(() => {
-		rootBinding.remove()
-	})
+test("NoteBinding onCreated", (test) => {
+	const diary = new Diary()
+	const day = new Day(new Date())
+	const page = new Page()
+	const note = new Note("test", new Date())
+	const binding = new NoteBinding({ note, diary, day, page })
+	test.context.rootBinding.run(NoteModel({ note }), { binding })
+	test.pass()
+})
 
-	it("instance", () => {
-		assert.ok(NoteBinding.prototype instanceof Binding)
-	})
-
-	it("onCreated", () => {
+test("NoteBinding edit button", (test) => {
+	return new Promise(resolve => {
 		const diary = new Diary()
 		const day = new Day(new Date())
 		const page = new Page()
 		const note = new Note("test", new Date())
 		const binding = new NoteBinding({ note, diary, day, page })
-		rootBinding.run(NoteModel({ note }), { binding })
+		test.context.rootBinding.run(NoteModel({ note }), { binding })
+		diary.editor.listen("open", data => {
+			test.is(data, note)
+			resolve()
+		})
+		binding.identifier.edit.dispatchEvent(new test.context.window.Event('click'))
 	})
+})
 
-	it("remove", () => {
-
+test("NoteBinding remove button", (test) => {
+	return new Promise(resolve => {
+		const diary = new Diary()
+		const day = new Day(new Date())
+		const page = new Page()
+		const note = new Note("test", new Date())
+		const binding = new NoteBinding({ note, diary, day, page })
+		test.context.rootBinding.run(NoteModel({ note }), { binding })
+		diary.notes.listen("remove", data => {
+			test.is(data, note)
+			resolve()
+		})
+		binding.identifier.remove.dispatchEvent(new test.context.window.Event('click'))
 	})
-
-	it("update", () => {
-
-	})
-
-	it("editButton", () => {
-
-	})
-
-	it("removeButton", () => {
-
-	})
-
 })

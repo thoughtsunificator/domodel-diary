@@ -1,4 +1,4 @@
-import assert from "assert"
+import test from "ava"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 import { Router, RouterModel, RouterBinding } from "@domodel/router"
@@ -15,68 +15,34 @@ import Diary from "../src/object/diary.js"
 import Note from "../src/object/note.js"
 const url = "https://localhost/"
 
-const virtualDOM = new JSDOM(``, { url, })
-const window = virtualDOM.window
-const { document } = window
 
 const RootModel = { tagName: "div" }
-let rootBinding
 
-describe("DiaryBinding", () => {
+test.beforeEach((test) => {
+	test.context.virtualDOM = new JSDOM()
+	test.context.window = test.context.virtualDOM.window
+	test.context.document = test.context.window.document
+	test.context.rootBinding = new Binding()
+	Core.run(RootModel, { parentNode: test.context.document.body, binding: test.context.rootBinding })
+})
 
-	beforeEach(() => {
-		rootBinding = new Binding()
-		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	})
+test("DiaryBinding instance", (test) => {
+	test.true(DiaryBinding.prototype instanceof Binding)
+})
 
-	afterEach(() => {
-		rootBinding.remove()
-	})
-
-	it("instance", () => {
-		assert.ok(DiaryBinding.prototype instanceof Binding)
-	})
-
-	it("onCreated", () => {
-		const diary = new Diary()
-		const binding = new DiaryBinding({ diary })
-		rootBinding.run(DiaryModel, { binding })
-		assert.deepEqual(binding._children[0].model, RouterModel)
-		assert.ok(binding._children[0] instanceof RouterBinding)
-		const router = binding._children[0].properties.router
-		assert.ok(router instanceof Router)
-		assert.strictEqual(router.type, Router.TYPE.VIRTUAL)
-		assert.strictEqual(router.routes[0].match, "/")
-		assert.deepEqual(router.routes[0].model, AuthViewModel)
-		assert.deepEqual(router.routes[0].binding, AuthViewBinding)
-		assert.strictEqual(router.routes[1].match, "/diary")
-		assert.deepEqual(router.routes[1].model, DiaryViewModel)
-		assert.deepEqual(router.routes[1].binding, DiaryViewBinding)
-	})
-
-	it("reset", () => {
-		const diary = new Diary()
-		diary.firstRun = false
-		const binding = new DiaryBinding({ diary })
-		rootBinding.run(DiaryModel, { binding })
-		diary.listen("logout", () => {
-			assert.strictEqual(diary.firstRun, true)
-		})
-		diary.emit("reset")
-	})
-
-	it("logout", () => {
-		const diary = new Diary()
-		diary.notes.add("cxzcxz", new Date())
-		const binding = new DiaryBinding({ diary })
-		rootBinding.run(DiaryModel, { binding })
-		const router = binding._children[0].properties.router
-		router.listen("browse", data => {
-			assert.strictEqual(data.path, "/")
-			assert.deepEqual(diary.notes.notesList, [])
-			assert.strictEqual(diary.password, null)
-		})
-		diary.emit("logout")
-	})
-
+test("DiaryBinding onCreated", (test) => {
+	const diary = new Diary()
+	const binding = new DiaryBinding({ diary })
+	test.context.rootBinding.run(DiaryModel, { binding })
+	test.deepEqual(binding._children[0].model, RouterModel)
+	test.true(binding._children[0] instanceof RouterBinding)
+	const router = binding._children[0].properties.router
+	test.true(router instanceof Router)
+	test.is(router.type, Router.TYPE.VIRTUAL)
+	test.is(router.routes[0].match, "/")
+	test.deepEqual(router.routes[0].model, AuthViewModel)
+	test.deepEqual(router.routes[0].binding, AuthViewBinding)
+	test.is(router.routes[1].match, "/diary")
+	test.deepEqual(router.routes[1].model, DiaryViewModel)
+	test.deepEqual(router.routes[1].binding, DiaryViewBinding)
 })
