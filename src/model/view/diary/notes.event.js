@@ -15,7 +15,7 @@ class NotesEventListener extends EventListener {
 		const { diary } = this.properties
 		const { calendar, notes } = diary
 		const { form } = data
-		const note = notes.add(form.content, calendar.day.date)
+		notes.add(form.content, calendar.day.date)
 		diary.calendar.day.emit("updateIndicator", true)
 		this.render()
 	}
